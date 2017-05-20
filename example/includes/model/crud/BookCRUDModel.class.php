@@ -46,8 +46,8 @@ class BookCRUDModel extends CRUDModel
 		if($this->form->checkValid())
 		{
 			$book = $this->form->exportValues();
-			$stmt = Book::insert($this->dbh, $book);
-			header("Location: ".$_SERVER["SCRIPT_NAME"]."/books/".$this->form->fields['isbn']->value);
+			Book::insert($this->dbh, $book);
+			header("Location: ".$_SERVER["SCRIPT_NAME"]."/books/".$book['isbn']);
 			exit();
 		}
 	}
@@ -80,7 +80,8 @@ class BookCRUDModel extends CRUDModel
 		{
 			$book = $this->form->exportValues();
 			Book::update($this->dbh, $book, $this->keyFields['isbn']->value);
-			$this->viewBook();
+			header("Location: ".$_SERVER["SCRIPT_NAME"]."/books/".$book['isbn']);
+			exit();
 		}
 	}
 

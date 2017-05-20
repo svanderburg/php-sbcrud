@@ -24,8 +24,6 @@ class Book
 		$stmt = $dbh->prepare("insert into book values (?, ?, ?)");
 		if(!$stmt->execute(array($book['isbn'], $book['Title'], $book['Author'])))
 			throw new Exception($stmt->errorInfo()[2]);
-
-		return $stmt;
 	}
 	
 	public static function update(PDO $dbh, array $book, $isbn)
@@ -37,8 +35,6 @@ class Book
 			"where ISBN = ?");
 		if(!$stmt->execute(array($book['isbn'], $book['Title'], $book['Author'], $isbn)))
 			throw new Exception($stmt->errorInfo()[2]);
-
-		return $stmt;
 	}
 	
 	public static function remove(PDO $dbh, $isbn)
@@ -46,8 +42,6 @@ class Book
 		$stmt = $dbh->prepare("delete from book where ISBN = ?");
 		if(!$stmt->execute(array($isbn)))
 			throw new Exception($stmt->errorInfo()[2]);
-
-		return $stmt;
 	}
 }
 ?>
