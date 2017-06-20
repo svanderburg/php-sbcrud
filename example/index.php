@@ -3,6 +3,8 @@ error_reporting(E_STRICT | E_ALL);
 
 set_include_path("./lib/sblayout:./lib/sbdata:../sbcrud:./includes");
 
+require_once("config.inc.php");
+
 require_once("layout/model/Application.class.php");
 require_once("layout/model/section/StaticSection.class.php");
 require_once("layout/model/section/MenuSection.class.php");
@@ -17,7 +19,7 @@ require_once("model/page/BookCRUDPage.class.php");
 
 require_once("layout/view/html/index.inc.php");
 
-$dbh = new PDO("mysql:host=localhost;dbname=books", "root", "admin", array(
+$dbh = new PDO($config["dbDsn"], $config["dbUsername"], $config["dbPassword"], array(
 	PDO::ATTR_PERSISTENT => true
 ));
 
