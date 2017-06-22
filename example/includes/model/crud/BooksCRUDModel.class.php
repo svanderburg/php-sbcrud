@@ -19,8 +19,13 @@ class BooksCRUDModel extends CRUDModel
 
 	public function executeOperation()
 	{
+		function composeBookLink(KeyLinkField $field, Form $form)
+		{
+			return $_SERVER["PHP_SELF"]."/".$field->value;
+		}
+
 		$this->table = new DBTable(array(
-			"isbn" => new KeyLinkField("ISBN", "books/", true),
+			"isbn" => new KeyLinkField("ISBN", "composeBookLink", true),
 			"Title" => new TextField("Title", true),
 			"Author" => new TextField("Author", true)
 		));
