@@ -44,12 +44,12 @@ abstract class StaticContentCRUDPage extends StaticContentPage implements CRUDPa
 	/**
 	 * @see Page::lookupSubPage()
 	 */
-	public function lookupSubPage(Page $entryPage, array $ids, $index = 0)
+	public function lookupSubPage(Application $application, array $ids, $index = 0)
 	{
 		if($index == count($ids))
 			$this->contents = $this->crudManager->resolveContents($this);
 
-		return parent::lookupSubPage($entryPage, $ids, $index);
+		return parent::lookupSubPage($application, $ids, $index);
 	}
 }
 ?>
