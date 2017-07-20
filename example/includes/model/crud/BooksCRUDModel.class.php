@@ -24,10 +24,17 @@ class BooksCRUDModel extends CRUDModel
 			return $_SERVER["PHP_SELF"]."/".$field->value;
 		}
 
+		function deleteBookLink(Form $form)
+		{
+			return $_SERVER["SCRIPT_NAME"]."/books/".$form->fields["isbn"]->value."?__operation=delete_book";
+		}
+
 		$this->table = new DBTable(array(
 			"isbn" => new KeyLinkField("ISBN", "composeBookLink", true),
 			"Title" => new TextField("Title", true),
 			"Author" => new TextField("Author", true)
+		), array(
+			"Delete" => "deleteBookLink"
 		));
 
 		/* Compose a statement that queries the persons */

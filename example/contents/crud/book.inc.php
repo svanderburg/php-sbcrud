@@ -1,6 +1,5 @@
 <?php
 require_once("data/view/html/form.inc.php");
-require_once("data/view/html/table.inc.php");
 
 $booksURL = $_SERVER["SCRIPT_NAME"]."/books";
 ?>
