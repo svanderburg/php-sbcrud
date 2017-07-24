@@ -48,10 +48,12 @@ abstract class DynamicContentCRUDPage extends DynamicContentPage implements CRUD
 	 */
 	public function lookupSubPage(Application $application, array $ids, $index = 0)
 	{
-		if($index == count($ids))
+		$subPage = parent::lookupSubPage($application, $ids, $index);
+
+		if($subPage === $this)
 			$this->contents = $this->crudManager->resolveContents($this);
 
-		return parent::lookupSubPage($application, $ids, $index);
+		return $subPage;
 	}
 }
 ?>
