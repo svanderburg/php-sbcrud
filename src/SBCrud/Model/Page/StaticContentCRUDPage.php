@@ -1,8 +1,11 @@
 <?php
-require_once(dirname(__FILE__)."/../CRUDPage.interface.php");
-require_once("layout/model/page/StaticContentPage.class.php");
-require_once("layout/model/page/content/Contents.class.php");
-require_once("manager/CRUDManager.class.php");
+namespace SBCrud\Model\Page;
+use SBCrud\Model\CRUDPage;
+use SBCrud\Model\Page\Manager\CRUDManager;
+use SBLayout\Model\Application;
+use SBLayout\Model\Page\Page;
+use SBLayout\Model\Page\StaticContentPage;
+use SBLayout\Model\Page\Content\Contents;
 
 /**
  * A static content page that implements CRUD operations.

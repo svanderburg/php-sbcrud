@@ -40,18 +40,16 @@ These additional properties can be provided by composing `CRUDPage` objects and
 adding them to the application's layout:
 
 ```php
-require_once("layout/model/Application.class.php");
-require_once("layout/model/section/StaticSection.class.php");
-require_once("layout/model/section/MenuSection.class.php");
-require_once("layout/model/section/ContentsSection.class.php");
-require_once("layout/model/page/StaticContentPage.class.php");
-require_once("layout/model/page/PageAlias.class.php");
-require_once("layout/model/page/HiddenStaticContentPage.class.php");
-
-require_once("BooksCRUDPage.class.php");
-require_once("BookCRUDPage.class.php");
-
-require_once("layout/view/html/index.inc.php");
+use SBLayout\Model\Application;
+use SBLayout\Model\Page\HiddenStaticContentPage;
+use SBLayout\Model\Page\PageAlias;
+use SBLayout\Model\Page\StaticContentPage;
+use SBLayout\Model\Page\Content\Contents;
+use SBLayout\Model\Section\ContentsSection;
+use SBLayout\Model\Section\MenuSection;
+use SBLayout\Model\Section\StaticSection;
+use Example\Model\Page\BooksCRUDPage;
+use Example\Model\Page\BookCRUDPage;
 
 $dbh = new PDO("mysql:host=localhost;dbname=books", "root", "admin", array(
     PDO::ATTR_PERSISTENT => true
@@ -66,21 +64,21 @@ $application = new Application(
 
     /* Sections */
     array(
-        "header" => new StaticSection("header.inc.php"),
+        "header" => new StaticSection("header.php"),
         "menu" => new MenuSection(0),
         "contents" => new ContentsSection(true)
     ),
 
     /* Pages */
-    new StaticContentPage("Home", new Contents("home.inc.php"), array(
-        "404" => new HiddenStaticContentPage("Page not found", new Contents("error/404.inc.php")),
+    new StaticContentPage("Home", new Contents("home.php"), array(
+        "404" => new HiddenStaticContentPage("Page not found", new Contents("error/404.php")),
 
         "home" => new PageAlias("Home", ""),
         "books" => new BooksCRUDPage($dbh, new BookCRUDPage($dbh))
     ))
 );
 
-displayRequestedPage($application);
+\SBLayout\View\HTML\displayRequestedPage($application);
 ```
 
 In the above example code fragment, we add two CRUD page objects to the
@@ -115,9 +113,11 @@ For example, for the books overiew table page
 page object:
 
 ```php
-require_once("crud/model/page/DynamicContentCRUDPage.class.php");
-require_once(dirname(__FILE__)."/../crud/BooksCRUDModel.class.php");
-require_once(dirname(__FILE__)."/../crud/BookCRUDModel.class.php");
+use PDO;
+use SBCrud\Model\Page\DynamicContentCRUDPage;
+use SBLayout\Model\Page\Content\Contents;
+use Example\Model\CRUD\BooksCRUDModel;
+use Example\Model\CRUD\BookCRUDModel;
 
 class BooksCRUDPage extends DynamicContentCRUDPage
 {
@@ -131,13 +131,13 @@ class BooksCRUDPage extends DynamicContentCRUDPage
             /* Key fields */
             array(),
             /* Default contents */
-            new Contents("crud/books.inc.php"),
+            new Contents("crud/books.php"),
             /* Error contents */
-            new Contents("crud/error.inc.php"),
+            new Contents("crud/error.php"),
             /* Contents per operation */
             array(
-                "create_book" => new Contents("crud/book.inc.php"),
-                "insert_book" => new Contents("crud/book.inc.php")
+                "create_book" => new Contents("crud/book.php"),
+                "insert_book" => new Contents("crud/book.php")
             ),
             $dynamicSubPage);
 
@@ -178,12 +178,12 @@ In the constructor, we configure various kinds of CRUD page properties:
   `$GLOBALS["query"]["bookId"]`.
 * We do not have to validate any keys for this page -- when displaying the
   collection of all books, we do not require any keys.
-* We display the `crud/books.inc.php` as the default contents in the page's
-  content section and `crud/error.inc.php` in case of an error (when any
+* We display the `crud/books.php` as the default contents in the page's
+  content section and `crud/error.php` in case of an error (when any
   function invoked by the CRUD model yields an exception).
 * The contents per operation array can be used to override the displayed
   contents when the `__operation` GET/POST parameter has been provided. For
-  example, it will display `contents/book.inc.php` displaying an empty book
+  example, it will display `contents/book.php` displaying an empty book
   dialog when the URL is called as follows:
   `http://localhost/index.php/books?__operation=create_book`
 
@@ -201,7 +201,11 @@ want a page that displays an individual book. This CRUD page can be created as
 follows:
 
 ```php
-require_once("crud/model/page/StaticContentCRUDPage.class.php");
+use PDO;
+use SBCrud\Model\Page\StaticContentCRUDPage;
+use SBData\Model\Field\TextField;
+use SBLayout\Model\Page\Content\Contents;
+use Example\Model\CRUD\BookCRUDModel;
 
 class BookCRUDPage extends StaticContentCRUDPage
 {
@@ -215,9 +219,9 @@ class BookCRUDPage extends StaticContentCRUDPage
                 "isbn" => new TextField("ISBN", true)
             ),
             /* Default contents */
-            new Contents("crud/book.inc.php"),
+            new Contents("crud/book.php"),
             /* Error contents */
-            new Contents("crud/error.inc.php"),
+            new Contents("crud/error.php"),
 
             /* Contents per operation */
             array(),
@@ -242,8 +246,8 @@ In the constructor, we configure the following properties:
 * We configure the $GLOBALS["query"]["isbn"] value (set by the previous CRUD page)
   as the key to query an individual book. It will validated using `php-sbdata`'s
   `checkField()` method for a `TextField`.
-* It will display `crud/book.inc.php` by default in the page's contents section
-  and `crud/error.inc.php` in case of an error.
+* It will display `crud/book.php` by default in the page's contents section
+  and `crud/error.php` in case of an error.
 * It does not override any contents when a `__operation` GET/POST parameter has
   been provided.
 
@@ -262,11 +266,11 @@ A CRUD model for a specific data set can be created by inheriting from the
 individual books:
 
 ```php
-require_once("data/model/Form.class.php");
-require_once("data/model/field/TextField.class.php");
-require_once("data/model/field/HiddenField.class.php");
-require_once("crud/model/CRUDModel.class.php");
-require_once("model/entities/Book.class.php");
+use SBData\Model\Form;
+use SBData\Model\Field\HiddenField;
+use SBData\Model\Field\TextField;
+use SBCrud\Model\CRUDModel;
+use Example\Model\Entity\Book;
 
 class BookCRUDModel extends CRUDModel
 {
@@ -406,11 +410,9 @@ In the content sections of the page, the CRUD model can be reached through the
 global `$crudModel` variable:
 
 ```php
-require_once("data/view/html/form.inc.php");
-
 global $crudModel;
 
-displayEditableForm($crudModel->form,
+\SBData\View\HTML\displayEditableForm($crudModel->form,
     "Submit",
     "One or more fields are incorrectly specified and marked with a red color!",
     "This field is incorrectly specified!");

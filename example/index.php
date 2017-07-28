@@ -1,23 +1,19 @@
 <?php
 error_reporting(E_STRICT | E_ALL);
 
-set_include_path("./lib/sblayout:./lib/sbdata:../sbcrud:./includes");
+require_once(dirname(__FILE__)."/../vendor/autoload.php");
+require_once("includes/config.php");
 
-require_once("config.inc.php");
-
-require_once("layout/model/Application.class.php");
-require_once("layout/model/section/StaticSection.class.php");
-require_once("layout/model/section/MenuSection.class.php");
-require_once("layout/model/section/ContentsSection.class.php");
-require_once("layout/model/page/StaticContentPage.class.php");
-require_once("layout/model/page/PageAlias.class.php");
-require_once("layout/model/page/HiddenStaticContentPage.class.php");
-require_once("layout/model/page/DynamicContentPage.class.php");
-
-require_once("model/page/BooksCRUDPage.class.php");
-require_once("model/page/BookCRUDPage.class.php");
-
-require_once("layout/view/html/index.inc.php");
+use SBLayout\Model\Application;
+use SBLayout\Model\Page\HiddenStaticContentPage;
+use SBLayout\Model\Page\PageAlias;
+use SBLayout\Model\Page\StaticContentPage;
+use SBLayout\Model\Page\Content\Contents;
+use SBLayout\Model\Section\ContentsSection;
+use SBLayout\Model\Section\MenuSection;
+use SBLayout\Model\Section\StaticSection;
+use Example\Model\Page\BooksCRUDPage;
+use Example\Model\Page\BookCRUDPage;
 
 $dbh = new PDO($config["dbDsn"], $config["dbUsername"], $config["dbPassword"], array(
 	PDO::ATTR_PERSISTENT => true
@@ -32,19 +28,19 @@ $application = new Application(
 
 	/* Sections */
 	array(
-		"header" => new StaticSection("header.inc.php"),
+		"header" => new StaticSection("header.php"),
 		"menu" => new MenuSection(0),
 		"contents" => new ContentsSection(true)
 	),
 
 	/* Pages */
-	new StaticContentPage("Home", new Contents("home.inc.php"), array(
-		"404" => new HiddenStaticContentPage("Page not found", new Contents("error/404.inc.php")),
+	new StaticContentPage("Home", new Contents("home.php"), array(
+		"404" => new HiddenStaticContentPage("Page not found", new Contents("error/404.php")),
 
 		"home" => new PageAlias("Home", ""),
 		"books" => new BooksCRUDPage($dbh, new BookCRUDPage($dbh))
 	))
 );
 
-displayRequestedPage($application);
+\SBLayout\View\HTML\displayRequestedPage($application);
 ?>

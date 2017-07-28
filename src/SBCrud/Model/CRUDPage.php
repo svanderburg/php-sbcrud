@@ -1,4 +1,6 @@
 <?php
+namespace SBCrud\Model;
+
 /**
  * Mandates the functions any page providing CRUD operation must implement.
  */

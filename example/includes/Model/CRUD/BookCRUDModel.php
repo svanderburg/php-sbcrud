@@ -1,9 +1,13 @@
 <?php
-require_once("data/model/Form.class.php");
-require_once("data/model/field/TextField.class.php");
-require_once("data/model/field/HiddenField.class.php");
-require_once("crud/model/CRUDModel.class.php");
-require_once("model/entities/Book.class.php");
+namespace Example\Model\CRUD;
+use Exception;
+use PDO;
+use SBCrud\Model\CRUDModel;
+use SBCrud\Model\CRUDPage;
+use SBData\Model\Form;
+use SBData\Model\Field\HiddenField;
+use SBData\Model\Field\TextField;
+use Example\Model\Entity\Book;
 
 class BookCRUDModel extends CRUDModel
 {

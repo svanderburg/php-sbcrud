@@ -1,4 +1,8 @@
 <?php
+namespace Example\Model\Entity;
+use Exception;
+use PDO;
+
 class Book
 {
 	public static function queryAll(PDO $dbh)

@@ -1,5 +1,8 @@
 <?php
-require_once(dirname(__FILE__)."/../../CRUDPage.interface.php");
+namespace SBCrud\Model\Page\Manager;
+use Exception;
+use SBCrud\Model\CRUDPage;
+use SBLayout\Model\Page\Content\Contents;
 
 /**
  * Takes care of managing CRUD operations for a specific CRUD page.

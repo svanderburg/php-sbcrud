@@ -1,9 +1,13 @@
 <?php
-require_once("data/model/table/DBTable.class.php");
-require_once("data/model/field/KeyLinkField.class.php");
-require_once("data/model/field/TextField.class.php");
-require_once("crud/model/CRUDModel.class.php");
-require_once("model/entities/Book.class.php");
+namespace Example\Model\CRUD;
+use PDO;
+use SBCrud\Model\CRUDModel;
+use SBCrud\Model\CRUDPage;
+use SBData\Model\Form;
+use SBData\Model\Field\KeyLinkField;
+use SBData\Model\Field\TextField;
+use SBData\Model\Table\DBTable;
+use Example\Model\Entity\Book;
 
 class BooksCRUDModel extends CRUDModel
 {
@@ -30,11 +34,11 @@ class BooksCRUDModel extends CRUDModel
 		}
 
 		$this->table = new DBTable(array(
-			"isbn" => new KeyLinkField("ISBN", "composeBookLink", true),
+			"isbn" => new KeyLinkField("ISBN", '\Example\Model\CRUD\composeBookLink', true),
 			"Title" => new TextField("Title", true),
 			"Author" => new TextField("Author", true)
 		), array(
-			"Delete" => "deleteBookLink"
+			"Delete" => '\Example\Model\CRUD\deleteBookLink'
 		));
 
 		/* Compose a statement that queries the persons */

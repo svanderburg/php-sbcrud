@@ -1,5 +1,5 @@
 <?php
-require_once("CRUDPage.interface.php");
+namespace SBCrud\Model;
 
 /**
  * Provides an interface that can be used to uniformly read or change data

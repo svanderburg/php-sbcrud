@@ -1,0 +1,35 @@
+{
+  "name": "svanderburg/php-sbcrud",
+  "description": "Abstractions to construct web-based information systems",
+  "type": "library",
+  "license": "Apache-2.0",
+  "authors": [
+      {
+          "name": "Sander van der Burg",
+          "email": "svanderburg@gmail.com",
+          "homepage": "http://sandervanderburg.nl"
+      }
+  ],
+  "autoload": {
+      "psr-4": { "SBCrud\\": "src/SBCrud" }
+  },
+  "autoload-dev": {
+      "psr-4": {
+          "Example\\": "example/includes"
+      }
+  },
+  "repositories": [
+      {
+          "type": "path",
+          "url": "../php-sbdata"
+      },
+      {
+          "type": "path",
+          "url": "../php-sblayout"
+      }
+  ],
+  "require": {
+      "svanderburg/php-sblayout": "@dev",
+      "svanderburg/php-sbdata": "@dev"
+  }
+}

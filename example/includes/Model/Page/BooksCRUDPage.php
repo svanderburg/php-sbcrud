@@ -1,7 +1,10 @@
 <?php
-require_once("crud/model/page/DynamicContentCRUDPage.class.php");
-require_once(dirname(__FILE__)."/../crud/BooksCRUDModel.class.php");
-require_once(dirname(__FILE__)."/../crud/BookCRUDModel.class.php");
+namespace Example\Model\Page;
+use PDO;
+use SBCrud\Model\Page\DynamicContentCRUDPage;
+use SBLayout\Model\Page\Content\Contents;
+use Example\Model\CRUD\BooksCRUDModel;
+use Example\Model\CRUD\BookCRUDModel;
 
 class BooksCRUDPage extends DynamicContentCRUDPage
 {
@@ -15,13 +18,13 @@ class BooksCRUDPage extends DynamicContentCRUDPage
 			/* Key fields */
 			array(),
 			/* Default contents */
-			new Contents("crud/books.inc.php"),
+			new Contents("crud/books.php"),
 			/* Error contents */
-			new Contents("crud/error.inc.php"),
+			new Contents("crud/error.php"),
 			/* Contents per operation */
 			array(
-				"create_book" => new Contents("crud/book.inc.php"),
-				"insert_book" => new Contents("crud/book.inc.php")
+				"create_book" => new Contents("crud/book.php"),
+				"insert_book" => new Contents("crud/book.php")
 			),
 			$dynamicSubPage);
 

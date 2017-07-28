@@ -1,6 +1,10 @@
 <?php
-require_once("crud/model/page/StaticContentCRUDPage.class.php");
-require_once(dirname(__FILE__)."/../crud/BookCRUDModel.class.php");
+namespace Example\Model\Page;
+use PDO;
+use SBCrud\Model\Page\StaticContentCRUDPage;
+use SBLayout\Model\Page\Content\Contents;
+use SBData\Model\Field\TextField;
+use Example\Model\CRUD\BookCRUDModel;
 
 class BookCRUDPage extends StaticContentCRUDPage
 {
@@ -14,9 +18,9 @@ class BookCRUDPage extends StaticContentCRUDPage
 				"isbn" => new TextField("ISBN", true)
 			),
 			/* Default contents */
-			new Contents("crud/book.inc.php"),
+			new Contents("crud/book.php"),
 			/* Error contents */
-			new Contents("crud/error.inc.php"),
+			new Contents("crud/error.php"),
 			/* Contents per operation */
 			array(),
 			$subPages);
