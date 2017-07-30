@@ -34,11 +34,11 @@ class BooksCRUDModel extends CRUDModel
 		}
 
 		$this->table = new DBTable(array(
-			"isbn" => new KeyLinkField("ISBN", '\Example\Model\CRUD\composeBookLink', true),
+			"isbn" => new KeyLinkField("ISBN", __NAMESPACE__.'\\composeBookLink', true),
 			"Title" => new TextField("Title", true),
 			"Author" => new TextField("Author", true)
 		), array(
-			"Delete" => '\Example\Model\CRUD\deleteBookLink'
+			"Delete" => __NAMESPACE__.'\\deleteBookLink'
 		));
 
 		/* Compose a statement that queries the persons */
