@@ -4,16 +4,19 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "2b4b3e758d19eed4cee91eb1932e640d",
+    "content-hash": "5bdb55f60250f07382d667feefd09946",
     "packages": [
         {
             "name": "svanderburg/php-sbdata",
-            "version": "dev-composer",
-            "dist": {
-                "type": "path",
-                "url": "../php-sbdata",
-                "reference": "25f54e0e6742e2893a724c338f5a6f31be88d071",
-                "shasum": null
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/svanderburg/php-sbdata.git",
+                "reference": "78f4c2d4aabf7373fdf4edc7db1a76cf365ae905"
+            },
+            "require-dev": {
+                "abeautifulsite/simple-php-captcha": "1.0.x",
+                "phpunit/phpunit": "4.x"
             },
             "type": "library",
             "autoload": {
@@ -42,8 +45,12 @@
             },
             "autoload-dev": {
                 "psr-4": {
-                    "Examples\\Books\\": "examples/books/includes"
-                }
+                    "Examples\\Books\\": "examples/books/includes",
+                    "Examples\\CAPTCHA\\": "examples/captcha/includes"
+                },
+                "files": [
+                    "examples/captcha/includes/View/HTML/Field/captchafield.php"
+                ]
             },
             "license": [
                 "Apache-2.0"
@@ -55,16 +62,19 @@
                     "homepage": "http://sandervanderburg.nl"
                 }
             ],
-            "description": "Abstractions to deal with checking and displaying fields, forms and tables in web applications"
+            "description": "Abstractions to deal with checking and displaying fields, forms and tables in web applications",
+            "time": "2017-08-03 21:55:29"
         },
         {
             "name": "svanderburg/php-sblayout",
-            "version": "dev-composer",
-            "dist": {
-                "type": "path",
-                "url": "../php-sblayout",
-                "reference": "fc441e3168899873529fca5dfc20a8b597160fb2",
-                "shasum": null
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/svanderburg/php-sblayout.git",
+                "reference": "a570db3102fbdb31e6ed207545b8fe9147efe4f7"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "5.x"
             },
             "type": "library",
             "autoload": {
@@ -99,7 +109,8 @@
                     "homepage": "http://sandervanderburg.nl"
                 }
             ],
-            "description": "My custom website layout organiser framework for PHP"
+            "description": "My custom website layout organiser framework for PHP",
+            "time": "2017-08-03 21:53:42"
         }
     ],
     "packages-dev": [],
