@@ -7,6 +7,7 @@ use SBData\Model\Form;
 use SBData\Model\Field\KeyLinkField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Table\DBTable;
+use SBData\Model\Table\Anchor\AnchorRow;
 use Example\Model\Entity\Book;
 
 class BooksCRUDModel extends CRUDModel
@@ -30,7 +31,7 @@ class BooksCRUDModel extends CRUDModel
 
 		function deleteBookLink(Form $form)
 		{
-			return $_SERVER["SCRIPT_NAME"]."/books/".$form->fields["isbn"]->value."?__operation=delete_book";
+			return $_SERVER["SCRIPT_NAME"]."/books/".$form->fields["isbn"]->value."?__operation=delete_book".AnchorRow::composePreviousRowParameter($form);
 		}
 
 		$this->table = new DBTable(array(

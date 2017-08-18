@@ -7,6 +7,7 @@ use SBCrud\Model\CRUDPage;
 use SBData\Model\Form;
 use SBData\Model\Field\HiddenField;
 use SBData\Model\Field\TextField;
+use SBData\Model\Table\Anchor\AnchorRow;
 use Example\Model\Entity\Book;
 
 class BookCRUDModel extends CRUDModel
@@ -92,7 +93,7 @@ class BookCRUDModel extends CRUDModel
 	private function deleteBook()
 	{
 		Book::remove($this->dbh, $this->keyFields['isbn']->value);
-		header("Location: ".$_SERVER['HTTP_REFERER']);
+		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composeRowFragment());
 		exit();
 	}
 
