@@ -19,6 +19,43 @@ More specifically, this library provides:
 * A `CRUDModel` class giving a uniform interface to a data entity or data set
   implementing CRUD (Create, Read, Update, Write) operations.
 
+Installation
+============
+This package can be embedded in any PHP project by using
+[PHP composer](https://getcomposer.org). Add the following items to your
+project's `composer.json` file:
+
+```json
+{
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/svanderburg/php-sbcrud.git"
+    }
+  ],
+
+  "require": {
+    "svanderburg/php-sbcrud": "@dev",
+  }
+}
+```
+
+and run:
+
+```bash
+$ composer install
+```
+
+Installing development dependencies
+===================================
+When it is desired to modify the code or run the examples inside this
+repository, the development dependencies must be installed by opening
+the base directory and running:
+
+```bash
+$ composer install
+```
+
 Usage
 =====
 To use the features of this library, you must first compose a layout structure
@@ -428,11 +465,12 @@ in the `example/` sub folder.
 
 API documentation
 =================
-This package includes API documentation, which can be generated with
-[Doxygen](http://www.doxygen.org). The Makefile in this package contains a `doc`
-target and produces the corresponding HTML files in `apidoc`:
+This package includes API documentation that can be generated with
+[phpDocumentor](https://www.phpdoc.org):
 
-    $ make doc
+```bash
+$ vendor/bin/phpdoc
+```
 
 License
 =======
