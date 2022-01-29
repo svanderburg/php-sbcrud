@@ -3,6 +3,7 @@ namespace SBCrud\Model\Page;
 use SBCrud\Model\CRUDPage;
 use SBCrud\Model\Page\Manager\CRUDManager;
 use SBLayout\Model\Application;
+use SBLayout\Model\Route;
 use SBLayout\Model\Page\Page;
 use SBLayout\Model\Page\StaticContentPage;
 use SBLayout\Model\Page\Content\Contents;
@@ -45,16 +46,14 @@ abstract class StaticContentCRUDPage extends StaticContentPage implements CRUDPa
 	}
 
 	/**
-	 * @see Page::lookupSubPage()
+	 * @see Page::examineRoute()
 	 */
-	public function lookupSubPage(Application $application, array $ids, $index = 0)
+	public function examineRoute(Application $application, Route $route, $index = 0)
 	{
-		$subPage = parent::lookupSubPage($application, $ids, $index);
-	
-		if($subPage === $this)
-			$this->contents = $this->crudManager->resolveContents($this);
+		parent::examineRoute($application, $route, $index);
 
-		return $subPage;
+		if($route->determineCurrentPage() === $this)
+			$this->contents = $this->crudManager->resolveContents($this);
 	}
 }
 ?>

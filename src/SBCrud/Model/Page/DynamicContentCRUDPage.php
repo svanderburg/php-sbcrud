@@ -3,6 +3,7 @@ namespace SBCrud\Model\Page;
 use SBCrud\Model\CRUDPage;
 use SBCrud\Model\Page\Manager\CRUDManager;
 use SBLayout\Model\Application;
+use SBLayout\Model\Route;
 use SBLayout\Model\Page\DynamicContentPage;
 use SBLayout\Model\Page\Page;
 use SBLayout\Model\Page\Content\Contents;
@@ -47,16 +48,14 @@ abstract class DynamicContentCRUDPage extends DynamicContentPage implements CRUD
 	}
 
 	/**
-	 * @see Page::lookupSubPage()
+	 * @see Page::examineRoute()
 	 */
-	public function lookupSubPage(Application $application, array $ids, $index = 0)
+	public function examineRoute(Application $application, Route $route, $index = 0)
 	{
-		$subPage = parent::lookupSubPage($application, $ids, $index);
+		parent::examineRoute($application, $route, $index);
 
-		if($subPage === $this)
+		if($route->determineCurrentPage() === $this)
 			$this->contents = $this->crudManager->resolveContents($this);
-
-		return $subPage;
 	}
 }
 ?>
