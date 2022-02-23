@@ -12,9 +12,9 @@ use Example\Model\Entity\Book;
 
 class BooksCRUDModel extends CRUDModel
 {
-	public $dbh;
+	public PDO $dbh;
 
-	public $table = null;
+	public ?DBTable $table = null;
 
 	public function __construct(CRUDPage $crudPage, PDO $dbh)
 	{
@@ -22,7 +22,7 @@ class BooksCRUDModel extends CRUDModel
 		$this->dbh = $dbh;
 	}
 
-	public function executeOperation()
+	public function executeOperation(): void
 	{
 		function composeBookLink(KeyLinkField $field, Form $form)
 		{

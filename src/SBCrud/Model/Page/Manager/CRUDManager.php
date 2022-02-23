@@ -10,33 +10,33 @@ use SBLayout\Model\Page\Content\Contents;
 class CRUDManager
 {
 	/** Associative array mapping URL parameters to fields that can be used to check them */
-	public $keyFields;
+	public array $keyFields;
 
 	/** Indicates true if the key values are valid, else false */
-	public $validKeys;
+	public bool $validKeys;
 
 	/** The default contents to be displayed in the content sections */
-	public $defaultContents;
+	public Contents $defaultContents;
 
 	/** The contents to be displayed in the content sections in case of an error */
-	public $errorContents;
+	public Contents $errorContents;
 
 	/** The contents to be displayed when an operation parameter has been set */
-	public $contentsPerOperation;
+	public array $contentsPerOperation;
 
 	/** The message to be displayed when the keys are considered invalid */
-	public $keysInvalidMessage;
+	public string $keysInvalidMessage;
 
 	/**
 	 * Constructs a new CRUD manager object.
 	 *
-	 * @param array $keyFields Associative array mapping URL parameters to fields that can be used to check them
-	 * @param Contents $defaultContents The default contents to be displayed in the content sections
-	 * @param Contents $errorContents The contents to be displayed in the content sections in case of an error
-	 * @param array $contentsPerOperation The contents to be displayed when an operation parameter has been set
-	 * @param string $keysInvalidMessage The message to be displayed when the keys are considered invalid
+	 * @param $keyFields Associative array mapping URL parameters to fields that can be used to check them
+	 * @param $defaultContents The default contents to be displayed in the content sections
+	 * @param $errorContents The contents to be displayed in the content sections in case of an error
+	 * @param $contentsPerOperation The contents to be displayed when an operation parameter has been set
+	 * @param $keysInvalidMessage The message to be displayed when the keys are considered invalid
 	 */
-	public function __construct(array $keyFields, Contents $defaultContents, Contents $errorContents, array $contentsPerOperation, $keysInvalidMessage)
+	public function __construct(array $keyFields, Contents $defaultContents, Contents $errorContents, array $contentsPerOperation, string $keysInvalidMessage)
 	{
 		$this->keyFields = $keyFields;
 		$this->defaultContents = $defaultContents;
@@ -46,13 +46,13 @@ class CRUDManager
 		$this->keysInvalidMessage = $keysInvalidMessage;
 	}
 
-	private function importKeyValues(array $values)
+	private function importKeyValues(array $values): void
 	{
 		foreach($values as $key => $value)
 			$this->keyFields[$key]->value = $value;
 	}
 
-	private function checkKeyFields()
+	private function checkKeyFields(): void
 	{
 		foreach($this->keyFields as $key => $field)
 		{
@@ -64,7 +64,7 @@ class CRUDManager
 		}
 	}
 
-	private function selectContents()
+	private function selectContents(): Contents
 	{
 		if(array_key_exists("__operation", $_REQUEST) && array_key_exists($_REQUEST["__operation"], $this->contentsPerOperation))
 			return $this->contentsPerOperation[$_REQUEST["__operation"]];
@@ -72,7 +72,7 @@ class CRUDManager
 			return $this->defaultContents;
 	}
 
-	private function throwError($errorMessage)
+	private function throwError(string $errorMessage): Contents
 	{
 		$GLOBALS["error"] = $errorMessage;
 		return $this->errorContents;
@@ -84,10 +84,10 @@ class CRUDManager
 	 * contents that matches the provided $_REQUEST["__operation"]
 	 * parameter.
 	 *
-	 * @param CRUDPage $crudPage Any page implementing CRUD operations
-	 * @return Contents The resolved contents object
+	 * @param $crudPage Any page implementing CRUD operations
+	 * @return The resolved contents object
 	 */
-	public function resolveContents(CRUDPage $crudPage)
+	public function resolveContents(CRUDPage $crudPage): Contents
 	{
 		if(array_key_exists("query", $GLOBALS))
 		{

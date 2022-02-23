@@ -1,6 +1,7 @@
 <?php
 namespace Example\Model\Page;
 use PDO;
+use SBCrud\Model\CRUDModel;
 use SBCrud\Model\Page\StaticContentCRUDPage;
 use SBLayout\Model\Page\Content\Contents;
 use SBData\Model\Field\TextField;
@@ -10,7 +11,7 @@ class BookCRUDPage extends StaticContentCRUDPage
 {
 	public $dbh;
 
-	public function __construct(PDO $dbh, array $subPages = null)
+	public function __construct(PDO $dbh, array $subPages = array())
 	{
 		parent::__construct("Book",
 			/* Key fields */
@@ -28,7 +29,7 @@ class BookCRUDPage extends StaticContentCRUDPage
 		$this->dbh = $dbh;
 	}
 
-	public function constructCRUDModel()
+	public function constructCRUDModel(): CRUDModel
 	{
 		return new BookCRUDModel($this, $this->dbh);
 	}

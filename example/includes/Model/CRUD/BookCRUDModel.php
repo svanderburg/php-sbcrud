@@ -12,9 +12,9 @@ use Example\Model\Entity\Book;
 
 class BookCRUDModel extends CRUDModel
 {
-	public $dbh;
+	public PDO $dbh;
 
-	public $form = null;
+	public ?Form $form = null;
 
 	public function __construct(CRUDPage $crudPage, PDO $dbh)
 	{
@@ -22,7 +22,7 @@ class BookCRUDModel extends CRUDModel
 		$this->dbh = $dbh;
 	}
 
-	private function constructBookForm()
+	private function constructBookForm(): void
 	{
 		$this->form = new Form(array(
 			"__operation" => new HiddenField(true),
@@ -32,7 +32,7 @@ class BookCRUDModel extends CRUDModel
 		));
 	}
 	
-	private function createBook()
+	private function createBook(): void
 	{
 		$this->constructBookForm();
 
@@ -42,7 +42,7 @@ class BookCRUDModel extends CRUDModel
 		$this->form->importValues($row);
 	}
 
-	private function insertBook()
+	private function insertBook(): void
 	{
 		$this->constructBookForm();
 		$this->form->importValues($_REQUEST);
@@ -57,7 +57,7 @@ class BookCRUDModel extends CRUDModel
 		}
 	}
 
-	private function viewBook()
+	private function viewBook(): void
 	{
 		$this->constructBookForm();
 
@@ -75,7 +75,7 @@ class BookCRUDModel extends CRUDModel
 		}
 	}
 
-	private function updateBook()
+	private function updateBook(): void
 	{
 		$this->constructBookForm();
 		$this->form->importValues($_REQUEST);
@@ -90,14 +90,14 @@ class BookCRUDModel extends CRUDModel
 		}
 	}
 
-	private function deleteBook()
+	private function deleteBook(): void
 	{
 		Book::remove($this->dbh, $this->keyFields['isbn']->value);
 		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composeRowFragment());
 		exit();
 	}
 
-	public function executeOperation()
+	public function executeOperation(): void
 	{
 		if(array_key_exists("__operation", $_REQUEST))
 		{

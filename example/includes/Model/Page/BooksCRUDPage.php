@@ -1,7 +1,9 @@
 <?php
 namespace Example\Model\Page;
 use PDO;
+use SBCrud\Model\CRUDModel;
 use SBCrud\Model\Page\DynamicContentCRUDPage;
+use SBLayout\Model\Page\Page;
 use SBLayout\Model\Page\Content\Contents;
 use Example\Model\CRUD\BooksCRUDModel;
 use Example\Model\CRUD\BookCRUDModel;
@@ -10,7 +12,7 @@ class BooksCRUDPage extends DynamicContentCRUDPage
 {
 	public $dbh;
 
-	public function __construct(PDO $dbh, $dynamicSubPage = null)
+	public function __construct(PDO $dbh, Page $dynamicSubPage = null)
 	{
 		parent::__construct("Books",
 			/* Parameter name */
@@ -31,7 +33,7 @@ class BooksCRUDPage extends DynamicContentCRUDPage
 		$this->dbh = $dbh;
 	}
 	
-	public function constructCRUDModel()
+	public function constructCRUDModel(): CRUDModel
 	{
 		if(array_key_exists("__operation", $_REQUEST))
 		{

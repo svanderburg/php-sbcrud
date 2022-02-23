@@ -12,7 +12,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sbdata.git",
-                "reference": "311b93ddb0e748cda63d513f531164b53fd2b814"
+                "reference": "9e5c08f4b5f9e7d0c26df92bf384126d68f24af3"
             },
             "require-dev": {
                 "abeautifulsite/simple-php-captcha": "1.0.x",
@@ -64,7 +64,7 @@
                 }
             ],
             "description": "Abstractions to deal with checking and displaying fields, forms and tables in web applications",
-            "time": "2022-02-22T22:03:36+00:00"
+            "time": "2022-02-24T21:33:40+00:00"
         },
         {
             "name": "svanderburg/php-sblayout",
@@ -72,7 +72,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sblayout.git",
-                "reference": "ffb1172ab36b80615dde280d383b883f470c15f2"
+                "reference": "7b56951ac05dc73e57499c68680dd140d944e711"
             },
             "require-dev": {
                 "phpunit/phpunit": "9.x"
@@ -112,7 +112,7 @@
                 }
             ],
             "description": "My custom website layout organiser framework for PHP",
-            "time": "2022-02-22T22:03:16+00:00"
+            "time": "2022-02-23T21:24:14+00:00"
         }
     ],
     "packages-dev": [],

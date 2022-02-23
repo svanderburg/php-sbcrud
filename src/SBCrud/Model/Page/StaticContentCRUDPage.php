@@ -1,5 +1,6 @@
 <?php
 namespace SBCrud\Model\Page;
+use SBCrud\Model\CRUDModel;
 use SBCrud\Model\CRUDPage;
 use SBCrud\Model\Page\Manager\CRUDManager;
 use SBLayout\Model\Application;
@@ -13,20 +14,20 @@ use SBLayout\Model\Page\Content\Contents;
  */
 abstract class StaticContentCRUDPage extends StaticContentPage implements CRUDPage
 {
-	private $crudManager;
+	private CRUDManager $crudManager;
 
 	/**
 	 * Constructs a new static content CRUD page object.
 	 *
-	 * @param string $title Title of the page
-	 * @param array $keyFields Associative array mapping URL parameters to fields that can be used to check them
-	 * @param Contents $defaultContents The default contents to be displayed in the content sections
-	 * @param Contents $errorContents The contents to be displayed in the content sections in case of an error
-	 * @param array $contentsPerOperation The contents to be displayed when an operation parameter has been set
-	 * @param array $subPages An associative array mapping ids to sub pages
-	 * @param string $keysInvalidMessage The message to be displayed when the keys are considered invalid
+	 * @param $title Title of the page
+	 * @param $keyFields Associative array mapping URL parameters to fields that can be used to check them
+	 * @param $defaultContents The default contents to be displayed in the content sections
+	 * @param $errorContents The contents to be displayed in the content sections in case of an error
+	 * @param $contentsPerOperation The contents to be displayed when an operation parameter has been set
+	 * @param $subPages An associative array mapping ids to sub pages
+	 * @param $keysInvalidMessage The message to be displayed when the keys are considered invalid
 	 */
-	public function __construct($title, array $keyFields, Contents $defaultContents, Contents $errorContents, array $contentsPerOperation, array $subPages = null, $keysInvalidMessage = "The keys are invalid!")
+	public function __construct(string $title, array $keyFields, Contents $defaultContents, Contents $errorContents, array $contentsPerOperation, array $subPages = array(), string $keysInvalidMessage = "The keys are invalid!")
 	{
 		parent::__construct($title, $errorContents, $subPages);
 		$this->crudManager = new CRUDManager($keyFields, $defaultContents, $errorContents, $contentsPerOperation, $keysInvalidMessage);
@@ -35,12 +36,12 @@ abstract class StaticContentCRUDPage extends StaticContentPage implements CRUDPa
 	/**
 	 * @see CRUDPage::constructCRUDModel()
 	 */
-	public abstract function constructCRUDModel();
+	public abstract function constructCRUDModel(): CRUDModel;
 
 	/**
 	 * @see CRUDPage::getKeyFields()
 	 */
-	public function getKeyFields()
+	public function getKeyFields(): array
 	{
 		return $this->crudManager->keyFields;
 	}
@@ -48,7 +49,7 @@ abstract class StaticContentCRUDPage extends StaticContentPage implements CRUDPa
 	/**
 	 * @see Page::examineRoute()
 	 */
-	public function examineRoute(Application $application, Route $route, $index = 0)
+	public function examineRoute(Application $application, Route $route, int $index = 0): void
 	{
 		parent::examineRoute($application, $route, $index);
 

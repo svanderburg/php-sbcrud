@@ -10,16 +10,16 @@ interface CRUDPage
 	 * Constructs a crud model from the CRUD page that can be used to read
 	 * or modify the desired data entity.
 	 *
-	 * @return CRUDModel A CRUD model for a data entity or set
+	 * @return A CRUD model for a data entity or set
 	 */
-	public function constructCRUDModel();
+	public function constructCRUDModel(): CRUDModel;
 
 	/**
 	 * Returns the key fields that are used for validation of the URL
 	 * parameters.
 	 *
-	 * @return array An associative array mapping keys to fields
+	 * @return An associative array mapping keys to fields
 	 */
-	public function getKeyFields();
+	public function getKeyFields(): array;
 }
 ?>

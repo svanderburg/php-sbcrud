@@ -151,16 +151,18 @@ page object:
 
 ```php
 use PDO;
+use SBCrud\Model\CRUDModel;
 use SBCrud\Model\Page\DynamicContentCRUDPage;
+use SBLayout\Model\Page\Page;
 use SBLayout\Model\Page\Content\Contents;
 use Example\Model\CRUD\BooksCRUDModel;
 use Example\Model\CRUD\BookCRUDModel;
 
 class BooksCRUDPage extends DynamicContentCRUDPage
 {
-    public $dbh;
+    public PDO $dbh;
 
-    public function __construct(PDO $dbh, $dynamicSubPage = null)
+    public function __construct(PDO $dbh, Page $dynamicSubPage = null)
     {
         parent::__construct("Books",
             /* Parameter name */
@@ -181,7 +183,7 @@ class BooksCRUDPage extends DynamicContentCRUDPage
         $this->dbh = $dbh;
     }
 
-    public function constructCRUDModel()
+    public function constructCRUDModel(): CRUDModel
     {
         if(array_key_exists("__operation", $_REQUEST))
         {
@@ -239,6 +241,7 @@ follows:
 
 ```php
 use PDO;
+use SBCrud\Model\CRUDModel;
 use SBCrud\Model\Page\StaticContentCRUDPage;
 use SBData\Model\Field\TextField;
 use SBLayout\Model\Page\Content\Contents;
@@ -248,7 +251,7 @@ class BookCRUDPage extends StaticContentCRUDPage
 {
     public $dbh;
     
-    public function __construct(PDO $dbh, array $subPages = null)
+    public function __construct(PDO $dbh, array $subPages = array())
     {
         parent::__construct("Book",
             /* Key fields */
@@ -267,7 +270,7 @@ class BookCRUDPage extends StaticContentCRUDPage
         $this->dbh = $dbh;
     }
 
-    public function constructCRUDModel()
+    public function constructCRUDModel(): CRUDModel
     {
         return new BookCRUDModel($this, $this->dbh);
     }
@@ -303,6 +306,7 @@ A CRUD model for a specific data set can be created by inheriting from the
 individual books:
 
 ```php
+use PDO;
 use SBData\Model\Form;
 use SBData\Model\Field\HiddenField;
 use SBData\Model\Field\TextField;
@@ -311,17 +315,17 @@ use Example\Model\Entity\Book;
 
 class BookCRUDModel extends CRUDModel
 {
-    public $dbh;
+    public PDO $dbh;
 
-    public $form = null;
+    public ?Form $form = null;
 
     public function __construct(CRUDPage $crudPage, PDO $dbh)
     {
         parent::__construct($crudPage);
         $this->dbh = $dbh;
     }
-    
-    private function constructBookForm()
+
+    private function constructBookForm(): void
     {
         $this->form = new Form(array(
             "__operation" => new HiddenField(true),
@@ -330,18 +334,18 @@ class BookCRUDModel extends CRUDModel
             "Title" => new TextField("Title", true, 40)
         ));
     }
-    
-    private function createBook()
+
+    private function createBook(): void
     {
         $this->constructBookForm();
-        
+
         $row = array(
             "__operation" => "insert_book"
         );
         $this->form->importValues($row);
     }
 
-    private function insertBook()
+    private function insertBook(): void
     {
         $this->constructBookForm();
         $this->form->importValues($_REQUEST);
@@ -356,7 +360,7 @@ class BookCRUDModel extends CRUDModel
         }
     }
 
-    private function viewBook()
+    private function viewBook(): void
     {
         $this->constructBookForm();
 
@@ -374,7 +378,7 @@ class BookCRUDModel extends CRUDModel
         }
     }
 
-    private function updateBook()
+    private function updateBook(): void
     {
         $this->constructBookForm();
         $this->form->importValues($_REQUEST);
@@ -388,14 +392,14 @@ class BookCRUDModel extends CRUDModel
         }
     }
 
-    private function deleteBook()
+    private function deleteBook(): void
     {
         Book::remove($this->dbh, $this->keyFields['isbn']->value);
         header("Location: ".$_SERVER['HTTP_REFERER']);
         exit();
     }
-    
-    public function executeOperation()
+
+    public function executeOperation(): void
     {
         if(array_key_exists("__operation", $_REQUEST))
         {
@@ -466,10 +470,10 @@ in the `example/` sub folder.
 API documentation
 =================
 This package includes API documentation that can be generated with
-[phpDocumentor](https://www.phpdoc.org):
+[Doxygen](https://www.doxygen.nl):
 
 ```bash
-$ vendor/bin/phpdoc
+$ doxygen
 ```
 
 License
