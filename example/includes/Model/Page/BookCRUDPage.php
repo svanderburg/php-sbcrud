@@ -9,7 +9,7 @@ use Example\Model\CRUD\BookCRUDModel;
 
 class BookCRUDPage extends StaticContentCRUDPage
 {
-	public $dbh;
+	public PDO $dbh;
 
 	public function __construct(PDO $dbh, array $subPages = array())
 	{

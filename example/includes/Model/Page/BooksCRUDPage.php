@@ -10,7 +10,7 @@ use Example\Model\CRUD\BookCRUDModel;
 
 class BooksCRUDPage extends DynamicContentCRUDPage
 {
-	public $dbh;
+	public PDO $dbh;
 
 	public function __construct(PDO $dbh, Page $dynamicSubPage = null)
 	{
