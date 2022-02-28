@@ -12,7 +12,7 @@ class BooksCRUDPage extends DynamicContentCRUDPage
 {
 	public PDO $dbh;
 
-	public function __construct(PDO $dbh, Page $dynamicSubPage = null)
+	public function __construct(PDO $dbh, Page $dynamicSubPage)
 	{
 		parent::__construct("Books",
 			/* Parameter name */
