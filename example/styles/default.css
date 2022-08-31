@@ -4,6 +4,12 @@ body
 	font-size: 100%;
 	color: #000000;
 	background-color: #bbddff;
+
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 5px;
 }
 
 .mandatory
@@ -37,13 +43,19 @@ th
 #header
 {
 	background-color: #00aaff;
-	padding: 5px;
 }
 
 #menu
 {
 	background-color: #0055aa;
-	padding: 10px;
+
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	gap: 5px;
+
+	padding: 5px;
 }
 
 #menu a
