@@ -7,8 +7,6 @@ body
 
 	display: flex;
 	flex-direction: column;
-	flex-wrap: wrap;
-	justify-content: center;
 	gap: 5px;
 }
 
@@ -81,6 +79,11 @@ th
 #menu a.active
 {
 	color: #ffff00;
+}
+
+.formwrapper, .tablewrapper
+{
+	overflow-x: auto;
 }
 
 form div
