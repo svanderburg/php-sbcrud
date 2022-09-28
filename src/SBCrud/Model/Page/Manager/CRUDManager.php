@@ -49,7 +49,7 @@ class CRUDManager
 	private function importKeyValues(array $values): void
 	{
 		foreach($values as $key => $value)
-			$this->keyFields[$key]->value = $value;
+			$this->keyFields[$key]->importValue($value);
 	}
 
 	private function checkKeyFields(): void

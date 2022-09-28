@@ -61,7 +61,8 @@ class BookCRUDModel extends CRUDModel
 	{
 		$this->constructBookForm();
 
-		$stmt = Book::queryOne($this->dbh, $this->keyFields['isbn']->value);
+		$isbn = $this->keyFields['isbn']->exportValue();
+		$stmt = Book::queryOne($this->dbh, $isbn);
 
 		if(($row = $stmt->fetch()) === false)
 		{
@@ -84,7 +85,8 @@ class BookCRUDModel extends CRUDModel
 		if($this->form->checkValid())
 		{
 			$book = $this->form->exportValues();
-			Book::update($this->dbh, $book, $this->keyFields['isbn']->value);
+			$isbn = $this->keyFields['isbn']->exportValue();
+			Book::update($this->dbh, $book, $isbn);
 			header("Location: ".$_SERVER["SCRIPT_NAME"]."/books/".$book['isbn']);
 			exit();
 		}
@@ -92,7 +94,8 @@ class BookCRUDModel extends CRUDModel
 
 	private function deleteBook(): void
 	{
-		Book::remove($this->dbh, $this->keyFields['isbn']->value);
+		$isbn = $this->keyFields['isbn']->exportValue();
+		Book::remove($this->dbh, $isbn);
 		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composeRowFragment());
 		exit();
 	}

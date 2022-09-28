@@ -24,14 +24,16 @@ class BooksCRUDModel extends CRUDModel
 
 	public function executeOperation(): void
 	{
-		function composeBookLink(KeyLinkField $field, Form $form)
+		function composeBookLink(KeyLinkField $field, Form $form): string
 		{
-			return $_SERVER["PHP_SELF"]."/".$field->value;
+			$isbn = $field->exportValue();
+			return $_SERVER["PHP_SELF"]."/".$isbn;
 		}
 
-		function deleteBookLink(Form $form)
+		function deleteBookLink(Form $form): string
 		{
-			return $_SERVER["SCRIPT_NAME"]."/books/".$form->fields["isbn"]->value."?__operation=delete_book".AnchorRow::composePreviousRowParameter($form);
+			$isbn = $form->fields["isbn"]->exportValue();
+			return $_SERVER["SCRIPT_NAME"]."/books/".$isbn."?__operation=delete_book".AnchorRow::composePreviousRowParameter($form);
 		}
 
 		$this->table = new DBTable(array(
