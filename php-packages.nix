@@ -5,10 +5,10 @@ let
     "svanderburg/php-sbdata" = {
       targetDir = "";
       src = fetchgit {
-        name = "svanderburg-php-sbdata-2532ede5954d15690cf6e00b6280a3ecd01aff4e";
+        name = "svanderburg-php-sbdata-1eaae7c41b8bc95e1197e3c82765cf7d5731426d";
         url = "https://github.com/svanderburg/php-sbdata.git";
-        rev = "2532ede5954d15690cf6e00b6280a3ecd01aff4e";
-        sha256 = "0l30w61pvd3c42l28g81z3ninj5hcv8q8kci8yaw57bkgvwfr447";
+        rev = "1eaae7c41b8bc95e1197e3c82765cf7d5731426d";
+        sha256 = "1dx404mhcy54i2w058h21zx5whmkrpwsw9wran0w95criqkb0a0c";
       };
     };
     "svanderburg/php-sblayout" = {
