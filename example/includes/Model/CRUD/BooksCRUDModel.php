@@ -33,7 +33,7 @@ class BooksCRUDModel extends CRUDModel
 		function deleteBookLink(Form $form): string
 		{
 			$isbn = $form->fields["isbn"]->exportValue();
-			return $_SERVER["SCRIPT_NAME"]."/books/".$isbn."?__operation=delete_book".AnchorRow::composePreviousRowParameter($form);
+			return $_SERVER["SCRIPT_NAME"]."/books/".$isbn."?__operation=delete_book".AnchorRow::composeRowParameter($form);
 		}
 
 		$this->table = new DBTable(array(

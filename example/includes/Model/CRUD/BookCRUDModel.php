@@ -96,7 +96,7 @@ class BookCRUDModel extends CRUDModel
 	{
 		$isbn = $this->keyFields['isbn']->exportValue();
 		Book::remove($this->dbh, $isbn);
-		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composeRowFragment());
+		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composePreviousRowFragment());
 		exit();
 	}
 
