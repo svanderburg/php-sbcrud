@@ -15,11 +15,11 @@ interface CRUDPage
 	public function constructCRUDModel(): CRUDModel;
 
 	/**
-	 * Returns the key fields that are used for validation of the URL
+	 * Returns the key values that are used for validation of the URL
 	 * parameters.
 	 *
-	 * @return An associative array mapping keys to fields
+	 * @return An associative array mapping keys to values
 	 */
-	public function getKeyFields(): array;
+	public function getKeyValues(): array;
 }
 ?>

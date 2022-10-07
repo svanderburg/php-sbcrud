@@ -20,17 +20,17 @@ abstract class StaticContentCRUDPage extends StaticContentPage implements CRUDPa
 	 * Constructs a new static content CRUD page object.
 	 *
 	 * @param $title Title of the page
-	 * @param $keyFields Associative array mapping URL parameters to fields that can be used to check them
+	 * @param $keyValues Associative array mapping URL parameters to values that can be used to check them
 	 * @param $defaultContents The default contents to be displayed in the content sections
 	 * @param $errorContents The contents to be displayed in the content sections in case of an error
 	 * @param $contentsPerOperation The contents to be displayed when an operation parameter has been set
 	 * @param $subPages An associative array mapping ids to sub pages
 	 * @param $keysInvalidMessage The message to be displayed when the keys are considered invalid
 	 */
-	public function __construct(string $title, array $keyFields, Contents $defaultContents, Contents $errorContents, array $contentsPerOperation, array $subPages = array(), string $keysInvalidMessage = "The keys are invalid!")
+	public function __construct(string $title, array $keyValues, Contents $defaultContents, Contents $errorContents, array $contentsPerOperation, array $subPages = array(), string $keysInvalidMessage = "The keys are invalid!")
 	{
 		parent::__construct($title, $errorContents, $subPages);
-		$this->crudManager = new CRUDManager($keyFields, $defaultContents, $errorContents, $contentsPerOperation, $keysInvalidMessage);
+		$this->crudManager = new CRUDManager($keyValues, $defaultContents, $errorContents, $contentsPerOperation, $keysInvalidMessage);
 	}
 
 	/**
@@ -39,11 +39,11 @@ abstract class StaticContentCRUDPage extends StaticContentPage implements CRUDPa
 	public abstract function constructCRUDModel(): CRUDModel;
 
 	/**
-	 * @see CRUDPage::getKeyFields()
+	 * @see CRUDPage::getKeyValues()
 	 */
-	public function getKeyFields(): array
+	public function getKeyValues(): array
 	{
-		return $this->crudManager->keyFields;
+		return $this->crudManager->keyValues;
 	}
 
 	/**

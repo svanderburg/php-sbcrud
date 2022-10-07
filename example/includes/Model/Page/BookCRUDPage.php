@@ -4,7 +4,7 @@ use PDO;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\Page\StaticContentCRUDPage;
 use SBLayout\Model\Page\Content\Contents;
-use SBData\Model\Field\TextField;
+use SBData\Model\Value\Value;
 use Example\Model\CRUD\BookCRUDModel;
 
 class BookCRUDPage extends StaticContentCRUDPage
@@ -14,9 +14,9 @@ class BookCRUDPage extends StaticContentCRUDPage
 	public function __construct(PDO $dbh, array $subPages = array())
 	{
 		parent::__construct("Book",
-			/* Key fields */
+			/* Key values */
 			array(
-				"isbn" => new TextField("ISBN", true)
+				"isbn" => new Value(true)
 			),
 			/* Default contents */
 			new Contents("crud/book.php"),

@@ -9,8 +9,8 @@ use SBLayout\Model\Page\Content\Contents;
  */
 class CRUDManager
 {
-	/** Associative array mapping URL parameters to fields that can be used to check them */
-	public array $keyFields;
+	/** Associative array mapping URL parameters to values that can be used to check them */
+	public array $keyValues;
 
 	/** Indicates true if the key values are valid, else false */
 	public bool $validKeys;
@@ -30,15 +30,15 @@ class CRUDManager
 	/**
 	 * Constructs a new CRUD manager object.
 	 *
-	 * @param $keyFields Associative array mapping URL parameters to fields that can be used to check them
+	 * @param $keyValues Associative array mapping URL parameters to values that can be used to check them
 	 * @param $defaultContents The default contents to be displayed in the content sections
 	 * @param $errorContents The contents to be displayed in the content sections in case of an error
 	 * @param $contentsPerOperation The contents to be displayed when an operation parameter has been set
 	 * @param $keysInvalidMessage The message to be displayed when the keys are considered invalid
 	 */
-	public function __construct(array $keyFields, Contents $defaultContents, Contents $errorContents, array $contentsPerOperation, string $keysInvalidMessage)
+	public function __construct(array $keyValues, Contents $defaultContents, Contents $errorContents, array $contentsPerOperation, string $keysInvalidMessage)
 	{
-		$this->keyFields = $keyFields;
+		$this->keyValues = $keyValues;
 		$this->defaultContents = $defaultContents;
 		$this->errorContents = $errorContents;
 		$this->contentsPerOperation = $contentsPerOperation;
@@ -49,14 +49,14 @@ class CRUDManager
 	private function importKeyValues(array $values): void
 	{
 		foreach($values as $key => $value)
-			$this->keyFields[$key]->importValue($value);
+			$this->keyValues[$key]->value = $value;
 	}
 
-	private function checkKeyFields(): void
+	private function checkKeyValues(): void
 	{
-		foreach($this->keyFields as $key => $field)
+		foreach($this->keyValues as $key => $value)
 		{
-			if(!$field->checkField($key))
+			if(!$value->checkValue($key))
 			{
 				$this->validKeys = false;
 				break;
@@ -92,7 +92,7 @@ class CRUDManager
 		if(array_key_exists("query", $GLOBALS))
 		{
 			$this->importKeyValues($GLOBALS["query"]);
-			$this->checkKeyFields();
+			$this->checkKeyValues();
 		}
 
 		if($this->validKeys)

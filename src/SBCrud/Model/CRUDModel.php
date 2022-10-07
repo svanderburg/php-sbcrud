@@ -7,8 +7,8 @@ namespace SBCrud\Model;
  */
 abstract class CRUDModel
 {
-	/** An associative array of fields used to validate the parameters provided through $GLOBALS["query"] */
-	public array $keyFields;
+	/** An associative array of values corresponding to the parameters provided through $GLOBALS["query"] */
+	public array $keyValues;
 
 	/**
 	 * Constructs a CRUD model from a CRUD page
@@ -17,7 +17,7 @@ abstract class CRUDModel
 	 */
 	public function __construct(CRUDPage $crudPage)
 	{
-		$this->keyFields = $crudPage->getKeyFields();
+		$this->keyValues = $crudPage->getKeyValues();
 	}
 
 	/**
