@@ -283,7 +283,7 @@ from `php-sblayout`'s `StaticContentPage` class.
 
 In the constructor, we configure the following properties:
 
-* We configure the $GLOBALS["query"]["isbn"] value (set by the previous CRUD page)
+* We configure the `$GLOBALS["query"]["isbn"]` value (set by the previous CRUD page)
   as the key to query an individual book. It will validated using `php-sbdata`'s
   `checkField()` method for a `TextField`.
 * It will display `crud/book.php` by default in the page's contents section
@@ -354,8 +354,9 @@ class BookCRUDModel extends CRUDModel
         if($this->form->checkValid())
         {
             $book = $this->form->exportValues();
+            $isbn = $this->form->fields['isbn']->exportValue();
             $stmt = Book::insert($this->dbh, $book);
-            header("Location: ".$_SERVER["SCRIPT_NAME"]."/books/".$this->form->fields['isbn']->value);
+            header("Location: ".$_SERVER["SCRIPT_NAME"]."/books/".$isbn);
             exit();
         }
     }
@@ -364,7 +365,7 @@ class BookCRUDModel extends CRUDModel
     {
         $this->constructBookForm();
 
-        $stmt = Book::queryOne($this->dbh, $this->keyFields['isbn']->value);
+        $stmt = Book::queryOne($this->dbh, $this->keyValues['isbn']->value);
 
         if(($row = $stmt->fetch()) === false)
         {
@@ -387,14 +388,14 @@ class BookCRUDModel extends CRUDModel
         if($this->form->checkValid())
         {
             $book = $this->form->exportValues();
-            Book::update($this->dbh, $book, $this->keyFields['isbn']->value);
+            Book::update($this->dbh, $book, $this->keyValues['isbn']->value);
             $this->viewBook();
         }
     }
 
     private function deleteBook(): void
     {
-        Book::remove($this->dbh, $this->keyFields['isbn']->value);
+        Book::remove($this->dbh, $this->keyValues['isbn']->value);
         header("Location: ".$_SERVER['HTTP_REFERER']);
         exit();
     }

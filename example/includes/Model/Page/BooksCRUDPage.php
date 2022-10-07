@@ -17,7 +17,7 @@ class BooksCRUDPage extends DynamicContentCRUDPage
 		parent::__construct("Books",
 			/* Parameter name */
 			"isbn",
-			/* Key fields */
+			/* Key values */
 			array(),
 			/* Default contents */
 			new Contents("crud/books.php"),
