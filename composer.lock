@@ -12,7 +12,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sbdata.git",
-                "reference": "3f832f2d569917a33c0355bf6adeb36d1c42fcda"
+                "reference": "125b3f9cdc540959c6b2b2a715b6b4f298369314"
             },
             "require-dev": {
                 "abeautifulsite/simple-php-captcha": "1.0.x",
