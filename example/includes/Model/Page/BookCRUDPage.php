@@ -4,6 +4,7 @@ use PDO;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\Page\StaticContentCRUDPage;
 use SBLayout\Model\Page\Content\Contents;
+use SBData\Model\ParameterMap;
 use SBData\Model\Value\Value;
 use Example\Model\CRUD\BookCRUDModel;
 
@@ -15,9 +16,9 @@ class BookCRUDPage extends StaticContentCRUDPage
 	{
 		parent::__construct("Book",
 			/* Key values */
-			array(
+			new ParameterMap(array(
 				"isbn" => new Value(true)
-			),
+			)),
 			/* Default contents */
 			new Contents("crud/book.php"),
 			/* Error contents */

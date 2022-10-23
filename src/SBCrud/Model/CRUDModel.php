@@ -1,5 +1,6 @@
 <?php
 namespace SBCrud\Model;
+use SBData\Model\ParameterMap;
 
 /**
  * Provides an interface that can be used to uniformly read or change data
@@ -7,8 +8,8 @@ namespace SBCrud\Model;
  */
 abstract class CRUDModel
 {
-	/** An associative array of values corresponding to the parameters provided through $GLOBALS["query"] */
-	public array $keyValues;
+	/** An object mapping the keys of a URL to values corresponding to the parameters provided through $GLOBALS["query"] */
+	public ParameterMap $keyParameterMap;
 
 	/**
 	 * Constructs a CRUD model from a CRUD page
@@ -17,7 +18,7 @@ abstract class CRUDModel
 	 */
 	public function __construct(CRUDPage $crudPage)
 	{
-		$this->keyValues = $crudPage->getKeyValues();
+		$this->keyParameterMap = $crudPage->getKeyParameterMap();
 	}
 
 	/**

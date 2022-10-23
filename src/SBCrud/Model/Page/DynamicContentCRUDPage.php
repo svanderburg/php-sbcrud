@@ -1,5 +1,6 @@
 <?php
 namespace SBCrud\Model\Page;
+use SBData\Model\ParameterMap;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\CRUDPage;
 use SBCrud\Model\Page\Manager\CRUDManager;
@@ -22,17 +23,17 @@ abstract class DynamicContentCRUDPage extends DynamicContentPage implements CRUD
 	 *
 	 * @param $title Title of the page
 	 * @param $param Name to be given to the parameter
-	 * @param $keyValues Associative array mapping URL parameters to values that can be used to check them
+	 * @param $keyParameterMap An object mapping the URL keys to parameter values that can be checked for consistency
 	 * @param $defaultContents The default contents to be displayed in the content sections
 	 * @param $errorContents The contents to be displayed in the content sections in case of an error
 	 * @param $contentsPerOperation The contents to be displayed when an operation parameter has been set
 	 * @param $dynamicSubPage The dynamic sub page that interprets the URL parameter component
 	 * @param $keysInvalidMessage The message to be displayed when the keys are considered invalid
 	 */
-	public function __construct(string $title, string $param, array $keyValues, Contents $defaultContents, Contents $errorContents, array $contentsPerOperation = null, Page $dynamicSubPage, string $keysInvalidMessage = "The keys are invalid!")
+	public function __construct(string $title, string $param, ParameterMap $keyParameterMap, Contents $defaultContents, Contents $errorContents, array $contentsPerOperation = null, Page $dynamicSubPage, string $keysInvalidMessage = "The keys are invalid!")
 	{
 		parent::__construct($title, $param, $errorContents, $dynamicSubPage);
-		$this->crudManager = new CRUDManager($keyValues, $defaultContents, $errorContents, $contentsPerOperation, $keysInvalidMessage);
+		$this->crudManager = new CRUDManager($keyParameterMap, $defaultContents, $errorContents, $contentsPerOperation, $keysInvalidMessage);
 	}
 
 	/**
@@ -41,11 +42,11 @@ abstract class DynamicContentCRUDPage extends DynamicContentPage implements CRUD
 	public abstract function constructCRUDModel(): CRUDModel;
 
 	/**
-	 * @see CRUDPage::getKeyValues()
+	 * @see CRUDPage::getKeyParameterMap()
 	 */
-	public function getKeyValues(): array
+	public function getKeyParameterMap(): ParameterMap
 	{
-		return $this->crudManager->keyValues;
+		return $this->crudManager->keyParameterMap;
 	}
 
 	/**

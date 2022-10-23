@@ -1,5 +1,6 @@
 <?php
 namespace SBCrud\Model;
+use SBData\Model\ParameterMap;
 
 /**
  * Mandates the functions any page providing CRUD operation must implement.
@@ -15,11 +16,10 @@ interface CRUDPage
 	public function constructCRUDModel(): CRUDModel;
 
 	/**
-	 * Returns the key values that are used for validation of the URL
-	 * parameters.
+	 * Returns the parameter map that are used for validation of the keys in a URL.
 	 *
-	 * @return An associative array mapping keys to values
+	 * @return A parameter map mapping key to values
 	 */
-	public function getKeyValues(): array;
+	public function getKeyParameterMap(): ParameterMap;
 }
 ?>
