@@ -6,9 +6,26 @@ use PDOStatement;
 
 class Book
 {
-	public static function queryAll(PDO $dbh): PDOStatement
+	public static function queryNumOfBooks(PDO $dbh): int
 	{
-		$stmt = $dbh->prepare("select * from book order by ISBN");
+		$stmt = $dbh->prepare("select count(*) from book order by ISBN");
+		if(!$stmt->execute())
+			throw new Exception($stmt->errorInfo()[2]);
+
+		if(($row = $stmt->fetch()) === false)
+			return 0;
+		else
+			return (int)($row[0]);
+	}
+
+	public static function queryPage(PDO $dbh, int $page, int $pageSize): PDOStatement
+	{
+		$offset = (int)($page * $pageSize);
+
+		$stmt = $dbh->prepare("select * from book order by ISBN limit ?, ?");
+		$stmt->bindParam(1, $offset, PDO::PARAM_INT);
+		$stmt->bindParam(2, $pageSize, PDO::PARAM_INT);
+
 		if(!$stmt->execute())
 			throw new Exception($stmt->errorInfo()[2]);
 

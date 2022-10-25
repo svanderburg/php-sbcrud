@@ -2,6 +2,7 @@
 namespace Example\Model\Page;
 use PDO;
 use SBData\Model\ParameterMap;
+use SBData\Model\Value\PageValue;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\Page\DynamicContentCRUDPage;
 use SBLayout\Model\Page\Page;
@@ -20,6 +21,10 @@ class BooksCRUDPage extends DynamicContentCRUDPage
 			"isbn",
 			/* Key values */
 			new ParameterMap(),
+			/* Request values */
+			new ParameterMap(array(
+				"page" => new PageValue()
+			)),
 			/* Default contents */
 			new Contents("crud/books.php"),
 			/* Error contents */

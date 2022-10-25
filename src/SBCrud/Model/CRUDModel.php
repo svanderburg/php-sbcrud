@@ -11,6 +11,9 @@ abstract class CRUDModel
 	/** An object mapping the keys of a URL to values corresponding to the parameters provided through $GLOBALS["query"] */
 	public ParameterMap $keyParameterMap;
 
+	/** An object mapping the keys of request parameters to values */
+	public ParameterMap $requestParameterMap;
+
 	/**
 	 * Constructs a CRUD model from a CRUD page
 	 *
@@ -19,6 +22,7 @@ abstract class CRUDModel
 	public function __construct(CRUDPage $crudPage)
 	{
 		$this->keyParameterMap = $crudPage->getKeyParameterMap();
+		$this->requestParameterMap = $crudPage->getRequestParameterMap();
 	}
 
 	/**

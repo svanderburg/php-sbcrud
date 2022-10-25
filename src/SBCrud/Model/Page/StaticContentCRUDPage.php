@@ -22,16 +22,18 @@ abstract class StaticContentCRUDPage extends StaticContentPage implements CRUDPa
 	 *
 	 * @param $title Title of the page
 	 * @param $keyParameterMap An object mapping the URL keys to parameter values that can be checked for consistency
+	 * @param $requestParameterMap An object mapping request parameter keys to values that can be checked for consistency
 	 * @param $defaultContents The default contents to be displayed in the content sections
 	 * @param $errorContents The contents to be displayed in the content sections in case of an error
 	 * @param $contentsPerOperation The contents to be displayed when an operation parameter has been set
 	 * @param $subPages An associative array mapping ids to sub pages
 	 * @param $keysInvalidMessage The message to be displayed when the keys are considered invalid
+	 * @param $parametersInvalidMessage The message to be displayed when the request parameters are considered invalid
 	 */
-	public function __construct(string $title, ParameterMap $keyParameterMap, Contents $defaultContents, Contents $errorContents, array $contentsPerOperation, array $subPages = array(), string $keysInvalidMessage = "The keys are invalid!")
+	public function __construct(string $title, ParameterMap $keyParameterMap, ParameterMap $requestParameterMap, Contents $defaultContents, Contents $errorContents, array $contentsPerOperation, array $subPages = array(), string $keysInvalidMessage = "The following keys are invalid:", string $parametersInvalidMessage = "The following parameters are invalid:")
 	{
 		parent::__construct($title, $errorContents, $subPages);
-		$this->crudManager = new CRUDManager($keyParameterMap, $defaultContents, $errorContents, $contentsPerOperation, $keysInvalidMessage);
+		$this->crudManager = new CRUDManager($keyParameterMap, $requestParameterMap, $defaultContents, $errorContents, $contentsPerOperation, $keysInvalidMessage, $parametersInvalidMessage);
 	}
 
 	/**
@@ -45,6 +47,14 @@ abstract class StaticContentCRUDPage extends StaticContentPage implements CRUDPa
 	public function getKeyParameterMap(): ParameterMap
 	{
 		return $this->crudManager->keyParameterMap;
+	}
+
+	/**
+	 * @see CRUDPage::getRequestParameterMap()
+	 */
+	public function getRequestParameterMap(): ParameterMap
+	{
+		return $this->crudManager->requestParameterMap;
 	}
 
 	/**

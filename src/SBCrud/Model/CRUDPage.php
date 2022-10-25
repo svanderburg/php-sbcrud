@@ -16,10 +16,17 @@ interface CRUDPage
 	public function constructCRUDModel(): CRUDModel;
 
 	/**
-	 * Returns the parameter map that are used for validation of the keys in a URL.
+	 * Returns the parameter map used for validation of the keys in a URL.
 	 *
-	 * @return A parameter map mapping key to values
+	 * @return A parameter map mapping keys to values
 	 */
 	public function getKeyParameterMap(): ParameterMap;
+
+	/**
+	 * Returns the parameter map used for validation of the request parameters.
+	 *
+	 * @return A parameter map mapping keys to values
+	 */
+	public function getRequestParameterMap(): ParameterMap;
 }
 ?>
