@@ -37,6 +37,7 @@ class BookCRUDPage extends StaticContentCRUDPage
 
 	public function constructCRUDModel(): CRUDModel
 	{
+		$this->emitCanonicalHeader();
 		return new BookCRUDModel($this, $this->dbh);
 	}
 }

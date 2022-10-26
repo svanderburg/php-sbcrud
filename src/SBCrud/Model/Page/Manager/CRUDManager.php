@@ -110,5 +110,20 @@ class CRUDManager
 			return $this->throwError($ex->getMessage());
 		}
 	}
+
+	/**
+	 * Emits a canonical link so that the page is always considered the same even if GET parameters were specified.
+	 */
+	public function emitCanonicalHeader(): void
+	{
+		if(array_key_exists("HTTPS", $_SERVER) && $_SERVER["HTTPS"] == "on")
+			$url = "https://";
+		else
+			$url = "http://";
+
+		$url .= $_SERVER["HTTP_HOST"].$_SERVER["PHP_SELF"];
+
+		header('Link: <'.$url.'>; rel="canonical"');
+	}
 }
 ?>

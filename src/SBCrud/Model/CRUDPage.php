@@ -28,5 +28,10 @@ interface CRUDPage
 	 * @return A parameter map mapping keys to values
 	 */
 	public function getRequestParameterMap(): ParameterMap;
+
+	/**
+	 * Emits a canonical link so that the page is always considered the same even if GET parameters were specified.
+	 */
+	public function emitCanonicalHeader(): void;
 }
 ?>

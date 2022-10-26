@@ -58,6 +58,14 @@ abstract class StaticContentCRUDPage extends StaticContentPage implements CRUDPa
 	}
 
 	/**
+	 * @see CRUDPage::emitCanonicalHeader()
+	 */
+	public function emitCanonicalHeader(): void
+	{
+		$this->crudManager->emitCanonicalHeader();
+	}
+
+	/**
 	 * @see Page::examineRoute()
 	 */
 	public function examineRoute(Application $application, Route $route, int $index = 0): void

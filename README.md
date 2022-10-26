@@ -151,6 +151,8 @@ page object:
 
 ```php
 use PDO;
+use SBData\Model\ParameterMap;
+use SBData\Model\Value\PageValue;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\Page\DynamicContentCRUDPage;
 use SBLayout\Model\Page\Page;
@@ -167,8 +169,12 @@ class BooksCRUDPage extends DynamicContentCRUDPage
         parent::__construct("Books",
             /* Parameter name */
             "isbn",
-            /* Key fields */
-            array(),
+            /* Key parameters */
+            new ParameterMap(),
+            /* Request parameters */
+            new ParameterMap(array(
+                "page" => new PageValue()
+            )),
             /* Default contents */
             new Contents("crud/books.php"),
             /* Error contents */
@@ -217,6 +223,8 @@ In the constructor, we configure various kinds of CRUD page properties:
   `$GLOBALS["query"]["bookId"]`.
 * We do not have to validate any keys for this page -- when displaying the
   collection of all books, we do not require any keys.
+* The page may display a table that does pagination. As a result, it requires
+  a numeric `page` parameter that needs to be validated.
 * We display the `crud/books.php` as the default contents in the page's
   content section and `crud/error.php` in case of an error (when any
   function invoked by the CRUD model yields an exception).
@@ -243,7 +251,8 @@ follows:
 use PDO;
 use SBCrud\Model\CRUDModel;
 use SBCrud\Model\Page\StaticContentCRUDPage;
-use SBData\Model\Field\TextField;
+use SBData\Model\ParameterMap;
+use SBData\Model\Value\Value;
 use SBLayout\Model\Page\Content\Contents;
 use Example\Model\CRUD\BookCRUDModel;
 
@@ -254,10 +263,14 @@ class BookCRUDPage extends StaticContentCRUDPage
     public function __construct(PDO $dbh, array $subPages = array())
     {
         parent::__construct("Book",
-            /* Key fields */
-            array(
-                "isbn" => new TextField("ISBN", true)
-            ),
+            /* Key parameters */
+            new ParameterMap(array(
+                "isbn" => new Value(true)
+            )),
+            /* Request parameters */
+            new ParameterMap(array(
+                "page" => new PageValue()
+            )),
             /* Default contents */
             new Contents("crud/book.php"),
             /* Error contents */
@@ -272,6 +285,7 @@ class BookCRUDPage extends StaticContentCRUDPage
 
     public function constructCRUDModel(): CRUDModel
     {
+        $this->emitCanonicalHeader();
         return new BookCRUDModel($this, $this->dbh);
     }
 }
@@ -285,7 +299,11 @@ In the constructor, we configure the following properties:
 
 * We configure the `$GLOBALS["query"]["isbn"]` value (set by the previous CRUD page)
   as the key to query an individual book. It will validated using `php-sbdata`'s
-  `checkField()` method for a `TextField`.
+  `checkValue()` method of the `Value` class.
+* A user typically gets directed from the overview page: the books page
+  displaying a table with a subset (a `page`) of books. To redirect the user
+  back to the same page, we need to memorize the page by accepting it as a
+  request parameter.
 * It will display `crud/book.php` by default in the page's contents section
   and `crud/error.php` in case of an error.
 * It does not override any contents when a `__operation` GET/POST parameter has
@@ -296,13 +314,22 @@ Similar to the previous CRUD page example, this CRUD page must also override the
 different contents for any `__operation` parameter, we only need to provide one
 CRUD model -- one for an individual book.
 
+Because the page also accepts the optional `page` GET parameter which only
+purpose is to make the redirection to the overview page possible, search engines
+may consider the URL with the parameter enabled, different that the URL without
+the parameter.
+
+We can invoke `$this->emitCanonicalHeader()` to emit an HTTP header that
+provides a canonical link to the page without any parameters, so that search
+engines consider this page always the same.
+
 Composing a CRUDModel for a data entity or data set
 ---------------------------------------------------
 As shown in the previous two page composition examples, we need to construct a
 CRUD model object for the data that we intend to display or modify.
 
 A CRUD model for a specific data set can be created by inheriting from the
-`CRUDModel` class. For example the following model can be used to modify
+`CRUDModel` class. For example, the following model can be used to modify
 individual books:
 
 ```php
@@ -365,7 +392,7 @@ class BookCRUDModel extends CRUDModel
     {
         $this->constructBookForm();
 
-        $stmt = Book::queryOne($this->dbh, $this->keyValues['isbn']->value);
+        $stmt = Book::queryOne($this->dbh, $this->keyParameterMap->values['isbn']->value);
 
         if(($row = $stmt->fetch()) === false)
         {
@@ -388,15 +415,18 @@ class BookCRUDModel extends CRUDModel
         if($this->form->checkValid())
         {
             $book = $this->form->exportValues();
-            Book::update($this->dbh, $book, $this->keyValues['isbn']->value);
+            Book::update($this->dbh, $book, $this->keyParameterMap->values['isbn']->value);
             $this->viewBook();
         }
     }
 
     private function deleteBook(): void
     {
-        Book::remove($this->dbh, $this->keyValues['isbn']->value);
-        header("Location: ".$_SERVER['HTTP_REFERER']);
+        Book::remove($this->dbh, $this->keyParameterMap->values['isbn']->value);
+
+        header("Location: ".$_SERVER["SCRIPT_NAME"]."/books?".http_build_query(array(
+            "page" => $this->requestParameterMap->values['page']->value
+        ), "", null, PHP_QUERY_RFC3986).AnchorRow::composePreviousRowFragment());
         exit();
     }
 
@@ -447,7 +477,6 @@ demonstrated in the next section).
 
 Displaying a data element of data set
 -------------------------------------
-
 In the content sections of the page, the CRUD model can be reached through the
 global `$crudModel` variable:
 

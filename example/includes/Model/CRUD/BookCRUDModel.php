@@ -96,7 +96,9 @@ class BookCRUDModel extends CRUDModel
 	{
 		$isbn = $this->keyParameterMap->values['isbn']->value;
 		Book::remove($this->dbh, $isbn);
-		header("Location: ".$_SERVER['HTTP_REFERER'].AnchorRow::composePreviousRowFragment());
+		header("Location: ".$_SERVER["SCRIPT_NAME"]."/books?".http_build_query(array(
+			"page" => $this->requestParameterMap->values['page']->value
+		), "", null, PHP_QUERY_RFC3986).AnchorRow::composePreviousRowFragment());
 		exit();
 	}
 

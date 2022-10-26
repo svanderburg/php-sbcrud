@@ -59,6 +59,11 @@ abstract class DynamicContentCRUDPage extends DynamicContentPage implements CRUD
 		return $this->crudManager->requestParameterMap;
 	}
 
+	public function emitCanonicalHeader(): void
+	{
+		$this->crudManager->emitCanonicalHeader();
+	}
+
 	/**
 	 * @see Page::examineRoute()
 	 */
