@@ -3,8 +3,8 @@ $booksURL = $_SERVER["SCRIPT_NAME"]."/books";
 global $crudModel;
 ?>
 <p>
-	<a href="<?php print($booksURL); ?>?<?php print(http_build_query(array("page"=> $crudModel->requestParameterMap->values["page"]->value), "", "&amp;", PHP_QUERY_RFC3986)); ?>">&laquo; Books</a> |
-	<a href="<?php print($booksURL); ?>?__operation=create_book">Add book</a>
+	<a href="<?= $booksURL ?>?<?= http_build_query(array("page"=> $crudModel->requestParameterMap->values["page"]->value), "", "&amp;", PHP_QUERY_RFC3986) ?>">&laquo; Books</a> |
+	<a href="<?= $booksURL ?>?__operation=create_book">Add book</a>
 </p>
 <?php
 global $crudModel;
