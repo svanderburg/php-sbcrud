@@ -15,7 +15,10 @@
   },
   "autoload-dev": {
       "psr-4": {
-          "Example\\": "example/includes"
+          "Examples\\Check\\": "examples/check/includes",
+          "Examples\\ReadOnly\\": "examples/readonly/includes",
+          "Examples\\Full\\": "examples/full/includes",
+          "Examples\\Paged\\": "examples/paged/includes"
       }
   },
   "repositories": [
