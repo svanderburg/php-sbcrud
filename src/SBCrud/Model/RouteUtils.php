@@ -41,7 +41,7 @@ class RouteUtils
 		$parsedUrl = parse_url($route->composeParentPageURL($_SERVER["SCRIPT_NAME"]));
 		$url = $parsedUrl["path"].$pathSuffix;
 
-		if($parsedUrl["query"] !== null)
+		if(array_key_exists("query", $parsedUrl) && $parsedUrl["query"] !== null)
 			$url .= "?".$parsedUrl["query"];
 
 		return $url;
