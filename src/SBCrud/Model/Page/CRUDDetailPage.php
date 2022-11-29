@@ -20,12 +20,13 @@ class CRUDDetailPage extends DetailPage implements CRUDPage
 	 * @param $defaultTitle Title of the default page that is used as a label in a menu section
 	 * @param $defaultContents A content object storing properties of the content sections of the default page
 	 * @param $operationPages An array mapping operation names to OperationPage objects
+	 * @param $subPages An associative array mapping ids to sub pages
 	 * @param $invalidOperationMessage The message prefix to be displayed when an invalid operation was specified
 	 * @param $operationParam Stores the name of the operation parameter
 	 */
-	public function __construct(string $defaultTitle, Contents $defaultContents, array $operationPages = array(), string $invalidOperationMessage = "Invalid operation:", string $operationParam = "__operation")
+	public function __construct(string $defaultTitle, Contents $defaultContents, array $operationPages = array(), array $subPages = array(), string $invalidOperationMessage = "Invalid operation:", string $operationParam = "__operation")
 	{
-		parent::__construct($defaultTitle, $defaultContents);
+		parent::__construct($defaultTitle, $defaultContents, $subPages);
 		$this->crudPageManager = new CRUDPageManager($operationPages, $invalidOperationMessage, $operationParam);
 	}
 
