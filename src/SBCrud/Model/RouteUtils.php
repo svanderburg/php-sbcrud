@@ -8,6 +8,16 @@ use SBLayout\Model\Route;
 class RouteUtils
 {
 	/**
+	 * Composes a better self reference than PHP_SELF that retains URL encoding.
+	 *
+	 * @return The path to itself similar to PHP_SELF with URL encoding
+	 */
+	public static function composeSelfURL(): string
+	{
+		return strtok($_SERVER["REQUEST_URI"], '?');
+	}
+
+	/**
 	 * Composes a URL relative to itself and automatically propagates all request parameters with it.
 	 *
 	 * @param $separator The separator to use between the request parameters. By default, it is &
@@ -17,7 +27,7 @@ class RouteUtils
 	 */
 	public static function composeSelfURLWithParameters(string $separator = null, string $pathSuffix = "", array $extraGetParameters = array()): string
 	{
-		$url = $_SERVER["PHP_SELF"].$pathSuffix;
+		$url = RouteUtils::composeSelfURL().$pathSuffix;
 
 		if(array_key_exists("requestParameters", $GLOBALS))
 			$allParameters = array_merge($GLOBALS["requestParameters"], $extraGetParameters);

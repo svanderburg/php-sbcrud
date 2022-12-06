@@ -517,6 +517,7 @@ use SBLayout\Model\Page\ContentPage;
 use SBData\Model\Field\TextField;
 use SBData\Model\Field\HiddenField;
 use SBData\Model\Table\Anchor\AnchorRow;
+use SBCrud\Model\RouteUtils;
 use SBCrud\Model\CRUDForm;
 use SBCrud\Model\CRUD\CRUDInterface;
 use SBCrud\Model\Page\CRUDPage;
@@ -573,7 +574,7 @@ class BookCRUDInterface extends CRUDInterface
 			$book = $this->form->exportValues();
 			Book::insert($this->dbh, $book);
 
-			header("Location: ".$_SERVER["PHP_SELF"]."/".rawurlencode($book['isbn']));
+			header("Location: ".RouteUtils::composeSelfURL()."/".rawurlencode($book['isbn']));
 			exit();
 		}
 	}
@@ -642,6 +643,9 @@ The above class creates an interface that captures all CRUD operations for
   In the above example, we use `CRUDForm` (that is a simple wrapper over the
   `Form` class in the `php-sbdata` framework) that makes it convenient to specify
   which CRUD operation needs to be executed.
+* To safely refer to the self URL, we use a wrapper function named:
+  `RouteUtils::composeSelfURL()` rather than PHP's unsafe `$_SERVER["PHP_SELF"]`
+  that unescapes special characters.
 
 The above class makes it possible to write a unified controller for all
 book-related operations (`controllers/books/book.php`):
@@ -778,10 +782,10 @@ feature to work -- when a page needs to invoke the URL of any of its sub pages, 
 also needs to propagate its request parameter values.
 
 So, for example, when it is desired to open an individual book page, it may be
-tempting to generate a URL relative to `$_SERVER["PHP_SELF"]`:
+tempting to generate a URL relative the current URL:
 
 ```php
-$subPageUrl = $_SERVER["PHP_SELF"]."/".rawurlencode($isbn);
+$subPageUrl = RouteUtils::composeSelfURL()."/".rawurlencode($isbn);
 ```
 
 The downside is that opening the link above loses the knowledge of the state of

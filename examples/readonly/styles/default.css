@@ -85,3 +85,8 @@ th
 {
 	overflow-x: auto;
 }
+
+.breadcrumbs
+{
+	font-size: 85%;
+}

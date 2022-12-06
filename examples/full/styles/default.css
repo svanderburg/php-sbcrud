@@ -86,6 +86,11 @@ th
 	overflow-x: auto;
 }
 
+.breadcrumbs
+{
+	font-size: 85%;
+}
+
 form div
 {
 	display: table-row;

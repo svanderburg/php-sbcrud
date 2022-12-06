@@ -1,6 +1,7 @@
 <?php
 namespace SBCrud\Model\Page\Manager;
 use SBLayout\Model\BadRequestException;
+use SBCrud\Model\RouteUtils;
 use SBCrud\Model\Page\CheckedPage;
 
 /**
@@ -28,7 +29,7 @@ class CheckedContentManager
 		else
 			$url = "http://";
 
-		$url .= $_SERVER["HTTP_HOST"].$_SERVER["PHP_SELF"];
+		$url .= $_SERVER["HTTP_HOST"].RouteUtils::composeSelfURL();
 
 		if(count($requestParameters) > 0)
 			$url .= "?".http_build_query($requestParameters, "", null, PHP_QUERY_RFC3986);

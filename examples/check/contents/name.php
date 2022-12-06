@@ -5,7 +5,8 @@
 </p>
 <p>
 	<?php
-	$url = $_SERVER["PHP_SELF"]."/sander?greeting=Hi";
+	use SBCrud\Model\RouteUtils;
+	$url = RouteUtils::composeSelfURL()."/sander?greeting=Hi";
 	?>
 	An example: <a href="<?= $url ?>"><?= $url ?></a>
 </p>

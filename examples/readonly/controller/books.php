@@ -4,14 +4,17 @@ use SBData\Model\Table\DBTable;
 use SBData\Model\Field\KeyLinkField;
 use SBData\Model\Field\TextField;
 use SBData\Model\Table\PagedDBTable;
+use SBCrud\Model\RouteUtils;
 use Examples\ReadOnly\Model\Entity\Book;
 
 global $dbh, $table;
 
-$composeBookLink = function (KeyLinkField $field, Form $form): string
+$selfURL = RouteUtils::composeSelfURL();
+
+$composeBookLink = function (KeyLinkField $field, Form $form) use ($selfURL): string
 {
 	$isbn = $field->exportValue();
-	return $_SERVER["PHP_SELF"]."/".rawurlencode($isbn);
+	return $selfURL."/".rawurlencode($isbn);
 };
 
 $table = new DBTable(array(

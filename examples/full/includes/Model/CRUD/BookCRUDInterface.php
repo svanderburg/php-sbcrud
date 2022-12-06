@@ -6,6 +6,7 @@ use SBLayout\Model\Page\ContentPage;
 use SBData\Model\Field\TextField;
 use SBData\Model\Field\HiddenField;
 use SBData\Model\Table\Anchor\AnchorRow;
+use SBCrud\Model\RouteUtils;
 use SBCrud\Model\CRUDForm;
 use SBCrud\Model\CRUD\CRUDInterface;
 use SBCrud\Model\Page\CRUDPage;
@@ -62,7 +63,7 @@ class BookCRUDInterface extends CRUDInterface
 			$book = $this->form->exportValues();
 			Book::insert($this->dbh, $book);
 
-			header("Location: ".$_SERVER["PHP_SELF"]."/".rawurlencode($book['isbn']));
+			header("Location: ".RouteUtils::composeSelfURL()."/".rawurlencode($book['isbn']));
 			exit();
 		}
 	}
