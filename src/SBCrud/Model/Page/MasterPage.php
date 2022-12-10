@@ -35,10 +35,11 @@ class MasterPage extends ContentPage implements CheckedPage
 	 * @param $param Name of the parameter that stores the value of the appended path component
 	 * @param $contents A content object storing properties of the content sections of a page
 	 * @param $invalidQueryParameterMessage Prefix of the message to be displayed when the path parameter is invalid
+	 * @param $menuItem PHP file that renders the menu item. Leaving it null just renders a hyperlink
 	 */
-	public function __construct(string $title, string $param, Contents $contents, string $invalidQueryParameterMessage = "Invalid query parameter:")
+	public function __construct(string $title, string $param, Contents $contents, string $invalidQueryParameterMessage = "Invalid query parameter:", string $menuItem = null)
 	{
-		parent::__construct($title, $contents);
+		parent::__construct($title, $contents, $menuItem);
 		$this->param = $param;
 		$this->invalidQueryParameterMessage = $invalidQueryParameterMessage;
 		$this->checkedContentManager = new CheckedContentManager($this);
