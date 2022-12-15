@@ -24,12 +24,21 @@ class OperationPage extends ContentPage implements CheckedPage, CRUDPage
 	 * @param $title Title of the page that is used as a label in a menu section
 	 * @param $contents A content object storing properties of the content sections of a page
 	 * @param $operationParam Stores the name of the operation parameter
+	 * @param $menuItem PHP file that renders the menu item. Leaving it null just renders a hyperlink
 	 */
-	public function __construct(string $title, Contents $contents, string $operationParam = "__operation")
+	public function __construct(string $title, Contents $contents, string $operationParam = "__operation", string $menuItem = null)
 	{
-		parent::__construct($title, $contents);
+		parent::__construct($title, $contents, $menuItem);
 		$this->operationParam = $operationParam;
 		$this->checkedContentManager = new CheckedContentManager($this);
+	}
+
+	/**
+	 * @see Page::deriveURL()
+	 */
+	function deriveURL(string $baseURL, string $id): string
+	{
+		return $baseURL."?".$this->operationParam."=".rawurlencode($id);
 	}
 
 	/**
@@ -38,14 +47,6 @@ class OperationPage extends ContentPage implements CheckedPage, CRUDPage
 	public function createRequestParameterMap(): ParameterMap
 	{
 		return new ParameterMap();
-	}
-
-	/**
-	 * @see Page:checkVisibility()
-	 */
-	public function checkVisibility(): bool
-	{
-		return false; // Operation pages are never supposed to be visible
 	}
 
 	/**
