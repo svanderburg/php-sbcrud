@@ -72,7 +72,16 @@ class CheckedContentManager
 	public function generateRequestParameterString(): string
 	{
 		if(array_key_exists("requestParameters", $GLOBALS) && count($GLOBALS["requestParameters"]) > 0)
-			return "?".http_build_query($GLOBALS["requestParameters"], "", "&amp;", PHP_QUERY_RFC3986);
+		{
+			$requestParameterMap = $this->checkedPage->createRequestParameterMap();
+			$requestParameterMap->importValues($GLOBALS["requestParameters"]);
+			$filteredRequestParameters = $requestParameterMap->exportValues();
+
+			if(count($filteredRequestParameters) > 0)
+				return "?".http_build_query($filteredRequestParameters, "", "&amp;", PHP_QUERY_RFC3986);
+			else
+				return "";
+		}
 		else
 			return "";
 	}
