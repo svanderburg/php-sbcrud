@@ -1,6 +1,7 @@
 <?php
 namespace SBCrud\Model;
 use SBData\Model\Form;
+use SBData\Model\Label;
 use SBData\Model\Field\HiddenField;
 
 /**
@@ -21,7 +22,7 @@ class CRUDForm extends Form
 	 * @param $validationErrorMessage Error message displayed on form level when a field is invalid
 	 * @param $fieldErrorMessage Error message displayed for an invalid field
 	 */
-	public function __construct(array $fields, string $operationParam = "__operation", string $actionURL = null, string $submitLabel = "Submit", string $validationErrorMessage = "One or more fields are invalid and marked with a red color", string $fieldErrorMessage = "This value is incorrect!")
+	public function __construct(array $fields, string $operationParam = "__operation", string $actionURL = null, Label $submitLabel = null, string $validationErrorMessage = "One or more fields are invalid and marked with a red color", string $fieldErrorMessage = "This value is incorrect!")
 	{
 		parent::__construct($fields, $actionURL, $submitLabel, $validationErrorMessage, $fieldErrorMessage);
 		$this->operationParam = $operationParam;

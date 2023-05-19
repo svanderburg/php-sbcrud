@@ -800,13 +800,13 @@ The above function call composes a URL relative to itself and automatically
 propagates all request parameters.
 
 Likewise, to compose a URL relative to the parent URL, you should use:
-`RouteURL::composePreviousURLWithParameters`.
+`RouteURL::composePreviousURLWithParameters()`.
 
 There is a penalty for propagting state parameters -- due to parameter
-propagation, there are multiple URLs that represent the same output that may
-confuse search engines. To clear up that confusion, a page will always output a
-canonical HTTP header that tells the requester the URL without all propagated
-parameters:
+propagation, there are multiple URLs that represent the same output. Having
+multiple URLs that represent the same content may confuse search engines. To
+clear up that confusion, a page will always output a canonical HTTP header that
+tells the requester the URL without all propagated parameters:
 
 ```
 Link: <http://localhost/paged/index.php/books>; rel="canonical"
@@ -817,6 +817,120 @@ they emit the following HTTP header:
 
 ```
 X-Robots-Tag: noindex, nofollow
+```
+
+Implementing pagination
+-----------------------
+Since pagination is very a common feature to implement, this framework contains
+a number of utilities to make that process easier.
+
+The following example revises the `BooksPage` class to accept a `page` parameter
+that specifies the page in the data set that needs to be displayed:
+
+
+```php
+namespace Examples\Full\Model\Page;
+use PDO;
+use SBLayout\Model\Page\ContentPage;
+use SBLayout\Model\Page\Content\Contents;
+use SBData\Model\ParameterMap;
+use SBData\Model\Value\Value;
+use SBData\Model\Value\PageValue;
+use SBCrud\Model\Page\CRUDMasterPage;
+use SBCrud\Model\Page\OperationPage;
+use Examples\Full\Model\Page\Content\BookContents;
+
+class BooksPage extends CRUDMasterPage
+{
+	public PDO $dbh;
+
+	public function __construct(PDO $dbh)
+	{
+		parent::__construct("Books", "isbn", new Contents("books.php", "books.php"), array(
+			"add_book" => new OperationPage("Add book", new BookContents()),
+			"insert_book" => new OperationPage("Insert book", new BookContents())
+		));
+		$this->dbh = $dbh;
+	}
+
+	public function createParamValue(): Value
+	{
+		return new Value(true, 17);
+	}
+
+	public function createRequestParameterMap(): ParameterMap
+	{
+		return new ParameterMap(array(
+			"page" => new PageValue()
+		));
+	}
+
+	public function createDetailPage(array $query): ?ContentPage
+	{
+		return new BookPage($this->dbh, $query["isbn"]);
+	}
+}
+```
+
+In the above example, the page has implemented a method:
+`createRequestParameterMap()` that returns a map with GET parameters that need
+to be checked. The `page` parameter can be used for querying a page. It is
+checked for a valid page number (a value that is 0 or higher).
+
+The `page` request parameter can be used to construct a query that queries the
+requested sub set of data:
+
+```php
+$table = new DBTable(array(
+	"isbn" => new KeyLinkField("ISBN", $composeBookLink, true),
+	"Title" => new TextField("Title", true),
+	"Author" => new TextField("Author", true)
+), array(
+	"Delete" => new Action($deleteBookLink)
+));
+
+$pageSize = 20;
+
+$table->setStatement(Book::queryPage($dbh, (int)($GLOBALS["requestParameters"]["page"]), $pageSize));
+```
+
+In the above example, we construct a `DBTable` object. The PDO statement that
+fetches the data uses the `$GLOBALS["requestParameter"]["page"]` to select the
+requested data page.
+
+When a data set is divided in pages, it is typically also desired to display a
+navigation bar allowing the user to conveniently navigate between them. We can
+create a `Pager` object to make this possible:
+
+```php
+use SBCrud\Model\Pager;
+
+global $dbh, $pageSize;
+
+$queryNumOfBookPages = function (PDO $dbh, int $pageSize): int
+{
+	return ceil(Book::queryNumOfBooks($dbh) / $pageSize);
+};
+
+$pager = new Pager($dbh, $pageSize, $queryNumOfBookPages);
+```
+
+In the above example we create a `Pager` object with the following properties:
+
+* It uses a database connection: `$dbh`
+* The second parameter refers to the `$pageSize`: the maximum amount of records
+  to be displayed on a single page. In the above example, that number is: `20`
+* The last parameter: `$queryNumOfBookPages` refers to a function that
+  determines the amount of pages. It the above example, that number is derived
+  from the amount of books stored in the database.
+* It is also possible to configure the labels and the name of the request
+  parameter (which defaults to `page`). These parameters are not shown in the
+  example.
+
+We can display a navigation bar from the above pager object as follows:
+
+```php
+\SBCrud\View\HTML\displayPagesNavigation($pager);
 ```
 
 Examples

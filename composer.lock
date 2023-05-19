@@ -12,7 +12,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sbdata.git",
-                "reference": "cb3dd1c0de175b36ddafd3c9d64c8e90b35134de"
+                "reference": "f61559eaca14e0795960e3c5cb42a2fec1c5efdd"
             },
             "require-dev": {
                 "abeautifulsite/simple-php-captcha": "1.0.x",
@@ -26,11 +26,11 @@
                 },
                 "files": [
                     "src/SBData/View/HTML/table.php",
-                    "src/SBData/View/HTML/pager.php",
-                    "src/SBData/View/HTML/pageddbtable.php",
+                    "src/SBData/View/HTML/editabletable.php",
                     "src/SBData/View/HTML/form.php",
                     "src/SBData/View/HTML/util.php",
                     "src/SBData/View/HTML/field.php",
+                    "src/SBData/View/HTML/label.php",
                     "src/SBData/View/HTML/Field/acceptablefilenamefield.php",
                     "src/SBData/View/HTML/Field/arraycomboboxfield.php",
                     "src/SBData/View/HTML/Field/textareafield.php",
@@ -67,8 +67,7 @@
             "autoload-dev": {
                 "psr-4": {
                     "Examples\\Books\\": "examples/books/includes",
-                    "Examples\\CAPTCHA\\": "examples/captcha/includes",
-                    "Examples\\TodoList\\": "examples/todolist/includes"
+                    "Examples\\CAPTCHA\\": "examples/captcha/includes"
                 },
                 "files": [
                     "examples/captcha/includes/View/HTML/Field/captchafield.php"
@@ -85,7 +84,7 @@
                 }
             ],
             "description": "Abstractions to deal with checking and displaying fields, forms and tables in web applications",
-            "time": "2023-03-18T15:55:04+00:00"
+            "time": "2023-05-16T23:05:46+00:00"
         },
         {
             "name": "svanderburg/php-sblayout",

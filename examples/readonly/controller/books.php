@@ -1,5 +1,5 @@
 <?php
-use SBData\Model\Form;
+use SBData\Model\ReadOnlyForm;
 use SBData\Model\Table\DBTable;
 use SBData\Model\Field\KeyLinkField;
 use SBData\Model\Field\TextField;
@@ -11,7 +11,7 @@ global $dbh, $table;
 
 $selfURL = RouteUtils::composeSelfURL();
 
-$composeBookLink = function (KeyLinkField $field, Form $form) use ($selfURL): string
+$composeBookLink = function (KeyLinkField $field, ReadOnlyForm $form) use ($selfURL): string
 {
 	$isbn = $field->exportValue();
 	return $selfURL."/".rawurlencode($isbn);
@@ -23,5 +23,5 @@ $table = new DBTable(array(
 	"Author" => new TextField("Author", true)
 ));
 
-$table->stmt = Book::queryAll($dbh);
+$table->setStatement(Book::queryAll($dbh));
 ?>

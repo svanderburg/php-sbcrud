@@ -1,40 +1,37 @@
 <?php
+use SBData\Model\ReadOnlyForm;
 use SBData\Model\Form;
-use SBData\Model\Table\PagedDBTable;
+use SBData\Model\Table\DBTable;
+use SBData\Model\Table\Action;
 use SBData\Model\Table\Anchor\AnchorRow;
 use SBData\Model\Field\KeyLinkField;
 use SBData\Model\Field\TextField;
 use SBCrud\Model\RouteUtils;
 use Examples\Paged\Model\Entity\Book;
 
-global $dbh, $table;
+global $dbh, $table, $pageSize;
 
-$queryNumOfBookPages = function (PDO $dbh, int $pageSize): int
-{
-	return ceil(Book::queryNumOfBooks($dbh) / $pageSize);
-};
-
-$composeBookLink = function (KeyLinkField $field, Form $form): string
+$composeBookLink = function (KeyLinkField $field, ReadOnlyForm $form): string
 {
 	$isbn = $field->exportValue();
 	return RouteUtils::composeSelfURLWithParameters("&amp;", "/".rawurlencode($isbn));
 };
 
-$deleteBookLink = function (Form $form): string
+$deleteBookLink = function (ReadOnlyForm $form): string
 {
 	$isbn = $form->fields["isbn"]->exportValue();
-	return RouteUtils::composeSelfURLWithParameters("&amp;", "/".rawurlencode($isbn), array("__operation" => "delete_book"));
+	return RouteUtils::composeSelfURLWithParameters("&amp;", "/".rawurlencode($isbn), array("__operation" => "delete_book")).AnchorRow::composeRowParameter($form);
 };
 
-$pageSize = 10;
-
-$table = new PagedDBTable(array(
+$table = new DBTable(array(
 	"isbn" => new KeyLinkField("ISBN", $composeBookLink, true),
 	"Title" => new TextField("Title", true),
 	"Author" => new TextField("Author", true)
-), $dbh, $pageSize, $queryNumOfBookPages, array(
-	"Delete" => $deleteBookLink
+), array(
+	"Delete" => new Action($deleteBookLink)
 ));
 
-$table->stmt = Book::queryPage($dbh, (int)($GLOBALS["requestParameters"]["page"]), $pageSize);
+$pageSize = 10;
+
+$table->setStatement(Book::queryPage($dbh, (int)($GLOBALS["requestParameters"]["page"]), $pageSize));
 ?>
