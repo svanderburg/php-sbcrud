@@ -10,7 +10,7 @@ use SBCrud\Model\Page\Manager\CheckedContentManager;
 /**
  * A page that exposes a CRUD operation to the user.
  */
-class OperationPage extends ContentPage implements CheckedPage, CRUDPage
+class OperationPage extends ContentPage implements CheckedPage, OperationParamPage
 {
 	/** Stores the name of the operation parameter */
 	public string $operationParam;
@@ -38,7 +38,10 @@ class OperationPage extends ContentPage implements CheckedPage, CRUDPage
 	 */
 	function deriveURL(string $baseURL, string $id): string
 	{
-		return $baseURL."?".$this->operationParam."=".rawurlencode($id);
+		if(str_contains($baseURL, "?"))
+			return $baseURL."&amp;".$this->operationParam."=".rawurlencode($id);
+		else
+			return $baseURL."?".$this->operationParam."=".rawurlencode($id);
 	}
 
 	/**
@@ -50,7 +53,7 @@ class OperationPage extends ContentPage implements CheckedPage, CRUDPage
 	}
 
 	/**
-	 * @see CRUDPage#getOperationParam()
+	 * @see OperationParamPage#getOperationParam()
 	 */
 	public function getOperationParam(): string
 	{

@@ -1,7 +1,7 @@
 <?php
 namespace SBCrud\Model;
 use SBData\Model\Form;
-use SBData\Model\Label;
+use SBData\Model\Label\Label;
 use SBData\Model\Field\HiddenField;
 
 /**

@@ -8,6 +8,7 @@ use SBData\Model\Value\Value;
 use SBData\Model\Value\PageValue;
 use SBCrud\Model\Page\CRUDMasterPage;
 use SBCrud\Model\Page\OperationPage;
+use SBCrud\Model\Page\HiddenOperationPage;
 use Examples\Paged\Model\Page\Content\BookContents;
 
 class BooksPage extends CRUDMasterPage
@@ -18,7 +19,7 @@ class BooksPage extends CRUDMasterPage
 	{
 		parent::__construct("Books", "isbn", new Contents("books.php", "books.php"), array(
 			"create_book" => new OperationPage("Create book", new BookContents()),
-			"insert_book" => new OperationPage("Insert book", new BookContents())
+			"insert_book" => new HiddenOperationPage("Insert book", new BookContents())
 		));
 		$this->dbh = $dbh;
 	}

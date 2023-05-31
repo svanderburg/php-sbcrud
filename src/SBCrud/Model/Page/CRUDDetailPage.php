@@ -9,7 +9,7 @@ use SBCrud\Model\Page\Manager\CRUDPageManager;
  * A page that is typically responsible for displaying an individual data record
  * and exposes CRUD operation allowing the user to manage the data.
  */
-class CRUDDetailPage extends DetailPage implements CRUDPage
+class CRUDDetailPage extends DetailPage implements OperationParamPage, CRUDPage
 {
 	/** A utility object that manages CRUD pages */
 	public CRUDPageManager $crudPageManager;
@@ -47,7 +47,7 @@ class CRUDDetailPage extends DetailPage implements CRUDPage
 	}
 
 	/**
-	 * @see CRUDPage#getOperationParam()
+	 * @see OperationParamPage#getOperationParam()
 	 */
 	public function getOperationParam(): string
 	{

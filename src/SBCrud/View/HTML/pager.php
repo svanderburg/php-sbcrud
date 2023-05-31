@@ -48,7 +48,7 @@ function displayPagesNavigation(Pager $pager): void
 			}
 			?>
 		</div>
-	<?php
+		<?php
 	}
 }
 

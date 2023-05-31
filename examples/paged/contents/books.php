@@ -6,11 +6,8 @@ use Examples\Paged\Model\Entity\Book;
 global $dbh, $route, $table, $pageSize;
 
 \SBLayout\View\HTML\displayBreadcrumbs($route);
-?>
-<p>
-	<a href="<?= RouteUtils::composeSelfURLWithParameters("&amp;", "", array("__operation" => "create_book")) ?>">Add book</a>
-</p>
-<?php
+\SBCrud\View\HTML\displayOperationToolbar($route);
+
 $queryNumOfBookPages = function (PDO $dbh, int $pageSize): int
 {
 	return ceil(Book::queryNumOfBooks($dbh) / $pageSize);

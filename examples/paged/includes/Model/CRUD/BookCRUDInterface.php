@@ -9,7 +9,7 @@ use SBData\Model\Table\Anchor\AnchorRow;
 use SBCrud\Model\RouteUtils;
 use SBCrud\Model\CRUDForm;
 use SBCrud\Model\CRUD\CRUDInterface;
-use SBCrud\Model\Page\CRUDPage;
+use SBCrud\Model\Page\OperationParamPage;
 use Examples\Paged\Model\Entity\Book;
 
 class BookCRUDInterface extends CRUDInterface
@@ -18,11 +18,11 @@ class BookCRUDInterface extends CRUDInterface
 
 	public Route $route;
 
-	public CRUDPage $currentPage;
+	public OperationParamPage $currentPage;
 
 	public CRUDForm $form;
 
-	public function __construct(PDO $dbh, Route $route, CRUDPage $currentPage)
+	public function __construct(PDO $dbh, Route $route, OperationParamPage $currentPage)
 	{
 		parent::__construct($currentPage);
 		$this->dbh = $dbh;

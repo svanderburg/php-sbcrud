@@ -450,6 +450,7 @@ use SBLayout\Model\Page\Content\Contents;
 use SBData\Model\Value\Value;
 use SBCrud\Model\Page\CRUDMasterPage;
 use SBCrud\Model\Page\OperationPage;
+use SBCrud\Model\Page\HiddenOperationPage;
 
 class BooksPage extends CRUDMasterPage
 {
@@ -459,7 +460,7 @@ class BooksPage extends CRUDMasterPage
 	{
 		parent::__construct("Books", "isbn", new Contents("books.php", "books.php"), array(
 			"add_book" => new OperationPage("Add book", new Contents("add_book.php", "add_book.php")),
-			"insert_book" => new OperationPage("Insert book", new Contents("insert_book.php", "insert_book.php"))
+			"insert_book" => new HiddenOperationPage("Insert book", new Contents("insert_book.php", "insert_book.php"))
 		));
 		$this->dbh = $dbh;
 	}
@@ -520,7 +521,7 @@ use SBData\Model\Table\Anchor\AnchorRow;
 use SBCrud\Model\RouteUtils;
 use SBCrud\Model\CRUDForm;
 use SBCrud\Model\CRUD\CRUDInterface;
-use SBCrud\Model\Page\CRUDPage;
+use SBCrud\Model\Page\OperationParamPage;
 use Examples\Full\Model\Entity\Book;
 
 class BookCRUDInterface extends CRUDInterface
@@ -529,11 +530,11 @@ class BookCRUDInterface extends CRUDInterface
 
 	public Route $route;
 
-	public CRUDPage $currentPage;
+	public OperationParamPage $currentPage;
 
 	public CRUDForm $form;
 
-	public function __construct(PDO $dbh, Route $route, CRUDPage $currentPage)
+	public function __construct(PDO $dbh, Route $route, OperationParamPage $currentPage)
 	{
 		parent::__construct($currentPage);
 		$this->dbh = $dbh;
@@ -702,6 +703,7 @@ use SBLayout\Model\Page\Content\Contents;
 use SBData\Model\Value\Value;
 use SBCrud\Model\Page\CRUDMasterPage;
 use SBCrud\Model\Page\OperationPage;
+use SBCrud\Model\Page\HiddenOperationPage;
 use Examples\Full\Model\Page\Content\BookContents;
 
 class BooksPage extends CRUDMasterPage
@@ -712,7 +714,7 @@ class BooksPage extends CRUDMasterPage
 	{
 		parent::__construct("Books", "isbn", new Contents("books.php", "books.php"), array(
 			"add_book" => new OperationPage("Add book", new BookContents()),
-			"insert_book" => new OperationPage("Insert book", new BookContents())
+			"insert_book" => new HiddenOperationPage("Insert book", new BookContents())
 		));
 		$this->dbh = $dbh;
 	}
@@ -838,6 +840,7 @@ use SBData\Model\Value\Value;
 use SBData\Model\Value\PageValue;
 use SBCrud\Model\Page\CRUDMasterPage;
 use SBCrud\Model\Page\OperationPage;
+use SBCrud\Model\Page\HiddenOperationPage;
 use Examples\Full\Model\Page\Content\BookContents;
 
 class BooksPage extends CRUDMasterPage
@@ -848,7 +851,7 @@ class BooksPage extends CRUDMasterPage
 	{
 		parent::__construct("Books", "isbn", new Contents("books.php", "books.php"), array(
 			"add_book" => new OperationPage("Add book", new BookContents()),
-			"insert_book" => new OperationPage("Insert book", new BookContents())
+			"insert_book" => new HiddenOperationPage("Insert book", new BookContents())
 		));
 		$this->dbh = $dbh;
 	}
@@ -932,6 +935,31 @@ We can display a navigation bar from the above pager object as follows:
 ```php
 \SBCrud\View\HTML\displayPagesNavigation($pager);
 ```
+
+Displaying operation toolbars
+-----------------------------
+Another common use case is to display a toolbar that exposes the available CRUD
+operations of an individual record or any related records that are exposed as
+parent pages.
+
+A operation toolbar can be generated from the current page route as follows:
+
+```php
+global $route;
+
+\SBCrud\View\HTML\displayOperationToolbar($route);
+```
+
+A generated toolbar section is very similar to generating an embedded menu
+section in the php-sblayout framework:
+
+* A toolbar displays visible operation pages only. It leaves out operation pages
+  that are declared invisible (such as objects that are instances of the
+  `HiddenOperationPage` class) or inaccessible.
+* It also displays menu items in a custom way if specified (through the
+  `menuItem` property)
+* Moreover, it is also possible to style the toolbar and the hyperlinks in such
+  a way that they appear as buttons
 
 Examples
 ========

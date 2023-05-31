@@ -3,7 +3,7 @@ namespace SBCrud\Model\CRUD;
 use Exception;
 use SBLayout\Model\PageException;
 use SBLayout\Model\BadRequestException;
-use SBCrud\Model\Page\CRUDPage;
+use SBCrud\Model\Page\OperationParamPage;
 
 /**
  * Provides a uniform interface to expose CRUD operations for a data object.
@@ -16,11 +16,11 @@ abstract class CRUDInterface
 	/**
 	 * Constructs a new CRUDInterface instance.
 	 *
-	 * @param $crudPage CRUDPage that is requested by the user
+	 * @param $operationParamPage Operation parameter page that is requested by the user
 	 */
-	public function __construct(CRUDPage $crudPage)
+	public function __construct(OperationParamPage $operationParamPage)
 	{
-		$this->operationParam = $crudPage->getOperationParam();
+		$this->operationParam = $operationParamPage->getOperationParam();
 	}
 
 	/**

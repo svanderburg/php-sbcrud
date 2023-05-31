@@ -123,3 +123,37 @@ form input
 {
 	font-size: 85%;
 }
+
+.operation-toolbar
+{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	gap: 5px;
+
+	background-color: #0055aa;
+	padding: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.operation-toolbar a
+{
+	font-weight: bold;
+	text-decoration: none;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #000000;
+	color: #ff00ff;
+	background-color: #002288;
+	padding-left: 1em;
+	padding-right: 1em;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.operation-toolbar a:hover
+{
+	background-color: #00aaff;
+}

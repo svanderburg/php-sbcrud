@@ -12,7 +12,7 @@ use SBCrud\Model\Page\Manager\CRUDPageManager;
  * belonging to the collection that can be requested by appending a path
  * component to the URL.
  */
-class CRUDMasterPage extends MasterPage implements CRUDPage
+class CRUDMasterPage extends MasterPage implements OperationParamPage, CRUDPage
 {
 	/** A utility object that manages CRUD pages */
 	public CRUDPageManager $crudPageManager;
@@ -51,7 +51,7 @@ class CRUDMasterPage extends MasterPage implements CRUDPage
 	}
 
 	/**
-	 * @see CRUDPage#getOperationParam()
+	 * @see OperationParamPage#getOperationParam()
 	 */
 	public function getOperationParam(): string
 	{
