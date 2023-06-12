@@ -17,7 +17,7 @@ use SBCrud\Model\RouteUtils;
  */
 function displayPagesNavigation(Pager $pager): void
 {
-	$numOfPages = ($pager->queryFunction)($pager->dbh, $pager->pageSize);
+	$numOfPages = ($pager->queryFunction)($pager->obj, $pager->pageSize);
 
 	if($numOfPages > 1)
 	{

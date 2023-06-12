@@ -1,7 +1,6 @@
 <?php
 namespace SBCrud\Model;
 use Closure;
-use PDO;
 
 /**
  * Captures the properties of a page that navigates a user through a data
@@ -9,8 +8,8 @@ use PDO;
  */
 class Pager
 {
-	/** A database connection handler */
-	public PDO $dbh;
+	/** An object that represents a collection of data */
+	public mixed $obj;
 
 	/** Determines the page size */
 	public int $pageSize;
@@ -30,16 +29,16 @@ class Pager
 	/**
 	 * Constructs a new pager instance.
 	 *
-	 * @param $dbh A database connection handler
+	 * @param $obj An object that represents a collection data
 	 * @param $pageSize Determines the page size
 	 * @param $queryFunction Function that determines the total amount of pages
 	 * @param $previousLabel Label of the previous button
 	 * @param $nextLabel Label of the next button
 	 * @param $paramName Name of the parameter in the parameter map that indicates the page size (defaults to: page)
 	 */
-	public function __construct(PDO $dbh, int $pageSize, string|Closure $queryFunction, string $previousLabel = "&laquo; Previous", string $nextLabel = "Next &raquo;", string $paramName = "page")
+	public function __construct(mixed $obj, int $pageSize, string|Closure $queryFunction, string $previousLabel = "&laquo; Previous", string $nextLabel = "Next &raquo;", string $paramName = "page")
 	{
-		$this->dbh = $dbh;
+		$this->obj = $obj;
 		$this->pageSize = $pageSize;
 		$this->queryFunction = $queryFunction;
 		$this->previousLabel = $previousLabel;

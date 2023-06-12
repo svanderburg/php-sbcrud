@@ -823,8 +823,11 @@ X-Robots-Tag: noindex, nofollow
 
 Implementing pagination
 -----------------------
-Since pagination is very a common feature to implement, this framework contains
-a number of utilities to make that process easier.
+It is quite common that we need to provide access to large collections of data.
+For an optimal user experience, it is typically better to only display portions
+of data. As a result, *pagination* is very common feature that needs to be
+implemented. This framework contains a number of utilities to make that process
+easier.
 
 The following example revises the `BooksPage` class to accept a `page` parameter
 that specifies the page in the data set that needs to be displayed:
@@ -910,7 +913,7 @@ use SBCrud\Model\Pager;
 
 global $dbh, $pageSize;
 
-$queryNumOfBookPages = function (PDO $dbh, int $pageSize): int
+$queryNumOfBookPagePages = function (PDO $dbh, int $pageSize): int
 {
 	return ceil(Book::queryNumOfBooks($dbh) / $pageSize);
 };
@@ -920,12 +923,15 @@ $pager = new Pager($dbh, $pageSize, $queryNumOfBookPages);
 
 In the above example we create a `Pager` object with the following properties:
 
-* It uses a database connection: `$dbh`
+* It needs to work with a data collection. In this particular example, we use a
+  database connection handler: `$dbh`, but it can be any kind of object.
 * The second parameter refers to the `$pageSize`: the maximum amount of records
   to be displayed on a single page. In the above example, that number is: `20`
 * The last parameter: `$queryNumOfBookPages` refers to a function that
   determines the amount of pages. It the above example, that number is derived
-  from the amount of books stored in the database.
+  from the amount of books stored in the database. The parameters of the
+  callback function: `$dbh` and `$pageSize` refer to the parameters that were
+  passed to the `Pager` constructor.
 * It is also possible to configure the labels and the name of the request
   parameter (which defaults to `page`). These parameters are not shown in the
   example.
