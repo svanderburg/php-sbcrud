@@ -14,10 +14,10 @@ let
     "svanderburg/php-sblayout" = {
       targetDir = "";
       src = fetchgit {
-        name = "svanderburg-php-sblayout-56b8668eae093d47c9ab8f6fab0522524cb0a89e";
+        name = "svanderburg-php-sblayout-1fb91bccd9d60ba072be1bc1a8d41b9699e01245";
         url = "https://github.com/svanderburg/php-sblayout.git";
-        rev = "56b8668eae093d47c9ab8f6fab0522524cb0a89e";
-        sha256 = "0c32hfayb70r5nq3bz38vqkqgy39qcn116vydvx37dkgvqnalvjq";
+        rev = "1fb91bccd9d60ba072be1bc1a8d41b9699e01245";
+        sha256 = "1j56srp4lii7bgf21vh6ypw6v5jm4kg3jcj06882g8qmjhsw8fdh";
       };
     };
   };
