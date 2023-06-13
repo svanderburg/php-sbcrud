@@ -67,12 +67,13 @@ class CheckedContentManager
 	/**
 	 * Computes a string suffix with all request parameters as GET parameters.
 	 *
+	 * @param $argSeparator The symbol that separates arguments
 	 * @return GET parameters or an empty string if no request parameters were specified
 	 */
-	public function generateRequestParameterString(): string
+	public function generateRequestParameterString(string $argSeparator): string
 	{
 		if(array_key_exists("requestParameters", $GLOBALS) && count($GLOBALS["requestParameters"]) > 0)
-			return "?".http_build_query($GLOBALS["requestParameters"], "", "&amp;", PHP_QUERY_RFC3986);
+			return "?".http_build_query($GLOBALS["requestParameters"], "", $argSeparator, PHP_QUERY_RFC3986);
 		else
 			return "";
 	}

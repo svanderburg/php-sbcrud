@@ -36,10 +36,10 @@ class OperationPage extends ContentPage implements CheckedPage, OperationParamPa
 	/**
 	 * @see Page::deriveURL()
 	 */
-	function deriveURL(string $baseURL, string $id): string
+	function deriveURL(string $baseURL, string $id, string $argSeparator = "&amp;"): string
 	{
 		if(str_contains($baseURL, "?"))
-			return $baseURL."&amp;".$this->operationParam."=".rawurlencode($id);
+			return $baseURL.$argSeparator.$this->operationParam."=".rawurlencode($id);
 		else
 			return $baseURL."?".$this->operationParam."=".rawurlencode($id);
 	}

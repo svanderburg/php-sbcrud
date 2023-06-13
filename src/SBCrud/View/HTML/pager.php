@@ -34,7 +34,7 @@ function displayPagesNavigation(Pager $pager): void
 				<?php
 			}
 			?>
-			<a href="<?= RouteUtils::composeSelfURLWithParameters("&amp;", "", array($pager->paramName => $currentPage)) ?>" class="active_page"><?= $currentPage ?></a>
+			<a href="<?= RouteUtils::composeSelfURLWithParameters("&amp;", "", array($pager->paramName => $currentPage)) ?>" class="active_page"><strong><?= $currentPage ?></strong></a>
 			<?php
 
 			$lastPage = $numOfPages - 1;

@@ -17,7 +17,7 @@ function generateOperationLinks(CRUDPageManager $crudPageManager, string $baseUR
 	{
 		if($operationPage->checkVisibleInMenu())
 		{
-			$url = $operationPage->deriveURL($baseURL, $id);
+			$url = $operationPage->deriveURL($baseURL, $id, "&amp;");
 			if($operationPage->menuItem === null)
 				\SBLayout\View\HTML\displayMenuItem(false, $url, $operationPage);
 			else
@@ -43,7 +43,7 @@ function displayOperationToolbar(Route $route, int $minLevel = 0): void
 		{
 			$currentId = $route->ids[$i];
 			$currentPage = $route->pages[$i + 1];
-			$url = $currentPage->deriveURL($url, $currentId);
+			$url = $currentPage->deriveURL($url, $currentId, "&amp;");
 
 			if($i >= $minLevel)
 			{

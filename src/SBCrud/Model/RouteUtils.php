@@ -45,10 +45,11 @@ class RouteUtils
 	 *
 	 * @param $route Route to the currently opened page
 	 * @param $pathSuffix Path to append to the URL
+	 * @param $separator The separator to use between the request parameters. By default, it is &
 	 */
-	public static function composePreviousURLWithParameters(Route $route, string $pathSuffix = ""): string
+	public static function composePreviousURLWithParameters(Route $route, string $pathSuffix = "", string $separator = "&"): string
 	{
-		$parsedUrl = parse_url($route->composeParentPageURL($_SERVER["SCRIPT_NAME"]));
+		$parsedUrl = parse_url($route->composeParentPageURL($_SERVER["SCRIPT_NAME"], $separator));
 		$url = $parsedUrl["path"].$pathSuffix;
 
 		if(array_key_exists("query", $parsedUrl) && $parsedUrl["query"] !== null)

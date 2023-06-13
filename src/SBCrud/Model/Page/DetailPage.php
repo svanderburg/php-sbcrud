@@ -40,10 +40,10 @@ class DetailPage extends StaticContentPage implements CheckedPage
 	/**
 	 * @see Page::deriveURL()
 	 */
-	public function deriveURL(string $baseURL, string $id): string
+	public function deriveURL(string $baseURL, string $id, string $argSeparator = "&amp;"): string
 	{
 		$baseURLPath = parse_url($baseURL, PHP_URL_PATH);
-		return parent::deriveURL($baseURLPath, $id).$this->checkedContentManager->generateRequestParameterString();
+		return parent::deriveURL($baseURLPath, $id, $argSeparator).$this->checkedContentManager->generateRequestParameterString($argSeparator);
 	}
 
 	/**
