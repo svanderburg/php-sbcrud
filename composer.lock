@@ -12,7 +12,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sbdata.git",
-                "reference": "f61559eaca14e0795960e3c5cb42a2fec1c5efdd"
+                "reference": "434133b7b1341885bd064ba84ee48732abeb9b3d"
             },
             "require-dev": {
                 "abeautifulsite/simple-php-captcha": "1.0.x",
@@ -32,6 +32,7 @@
                     "src/SBData/View/HTML/field.php",
                     "src/SBData/View/HTML/label.php",
                     "src/SBData/View/HTML/Field/acceptablefilenamefield.php",
+                    "src/SBData/View/HTML/Field/agreefield.php",
                     "src/SBData/View/HTML/Field/arraycomboboxfield.php",
                     "src/SBData/View/HTML/Field/textareafield.php",
                     "src/SBData/View/HTML/Field/checkboxfield.php",
@@ -84,7 +85,7 @@
                 }
             ],
             "description": "Abstractions to deal with checking and displaying fields, forms and tables in web applications",
-            "time": "2023-05-16T23:05:46+00:00"
+            "time": "2024-05-04T19:33:59+00:00"
         },
         {
             "name": "svanderburg/php-sblayout",
@@ -92,7 +93,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/svanderburg/php-sblayout.git",
-                "reference": "1fb91bccd9d60ba072be1bc1a8d41b9699e01245"
+                "reference": "126b3eb89e1e5a90675c26746be560c712300698"
             },
             "require-dev": {
                 "phpunit/phpunit": "9.x"
@@ -142,7 +143,7 @@
                 }
             ],
             "description": "My custom website layout organiser framework for PHP",
-            "time": "2023-07-04T19:04:55+00:00"
+            "time": "2024-05-04T19:31:22+00:00"
         }
     ],
     "packages-dev": [],
@@ -156,5 +157,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
