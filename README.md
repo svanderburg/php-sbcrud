@@ -11,7 +11,7 @@ layouts of web application pages and
 validating and displaying data elements.
 
 More specifically, this package provides the following features:
-* Data validation for input parameters
+* Data validation for request parameters
 * Construction of master-detail pages
 * Construction of CRUD pages
 * State parameter propagation
@@ -804,7 +804,7 @@ propagates all request parameters.
 Likewise, to compose a URL relative to the parent URL, you should use:
 `RouteURL::composePreviousURLWithParameters()`.
 
-There is a penalty for propagting state parameters -- due to parameter
+There is a penalty for propagating state parameters -- due to parameter
 propagation, there are multiple URLs that represent the same output. Having
 multiple URLs that represent the same content may confuse search engines. To
 clear up that confusion, a page will always output a canonical HTTP header that
