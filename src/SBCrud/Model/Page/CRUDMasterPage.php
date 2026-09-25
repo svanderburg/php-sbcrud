@@ -29,7 +29,7 @@ class CRUDMasterPage extends MasterPage implements OperationParamPage, CRUDPage
 	 * @param $operationParam Stores the name of the operation parameter
 	 * @param $menuItem PHP file that renders the menu item. Leaving it null just renders a hyperlink
 	 */
-	public function __construct(string $defaultTitle, string $param, Contents $defaultContents, array $operationPages = array(), string $invalidQueryParameterMessage = "Invalid query parameter:", string $invalidOperationMessage = "Invalid operation:", string $operationParam = "__operation", string $menuItem = null)
+	public function __construct(string $defaultTitle, string $param, Contents $defaultContents, array $operationPages = array(), string $invalidQueryParameterMessage = "Invalid query parameter:", string $invalidOperationMessage = "Invalid operation:", string $operationParam = "__operation", ?string $menuItem = null)
 	{
 		parent::__construct($defaultTitle, $param, $defaultContents, $invalidQueryParameterMessage, $menuItem);
 		$this->crudPageManager = new CRUDPageManager($operationPages, $invalidOperationMessage, $operationParam);

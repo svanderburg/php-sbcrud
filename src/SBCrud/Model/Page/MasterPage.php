@@ -37,7 +37,7 @@ class MasterPage extends ContentPage implements CheckedPage
 	 * @param $invalidQueryParameterMessage Prefix of the message to be displayed when the path parameter is invalid
 	 * @param $menuItem PHP file that renders the menu item. Leaving it null just renders a hyperlink
 	 */
-	public function __construct(string $title, string $param, Contents $contents, string $invalidQueryParameterMessage = "Invalid query parameter:", string $menuItem = null)
+	public function __construct(string $title, string $param, Contents $contents, string $invalidQueryParameterMessage = "Invalid query parameter:", ?string $menuItem = null)
 	{
 		parent::__construct($title, $contents, $menuItem);
 		$this->param = $param;

@@ -26,7 +26,7 @@ class OperationPage extends ContentPage implements CheckedPage, OperationParamPa
 	 * @param $operationParam Stores the name of the operation parameter
 	 * @param $menuItem PHP file that renders the menu item. Leaving it null just renders a hyperlink
 	 */
-	public function __construct(string $title, Contents $contents, string $operationParam = "__operation", string $menuItem = null)
+	public function __construct(string $title, Contents $contents, string $operationParam = "__operation", ?string $menuItem = null)
 	{
 		parent::__construct($title, $contents, $menuItem);
 		$this->operationParam = $operationParam;

@@ -25,7 +25,7 @@ class RouteUtils
 	 * @param $extraGetParameters An array of string mappings that specify additional GET parameters
 	 * @return A URL to itself with all propagated request parameters and additions
 	 */
-	public static function composeSelfURLWithParameters(string $separator = null, string $pathSuffix = "", array $extraGetParameters = array()): string
+	public static function composeSelfURLWithParameters(?string $separator = null, string $pathSuffix = "", array $extraGetParameters = array()): string
 	{
 		$url = RouteUtils::composeSelfURL().$pathSuffix;
 
